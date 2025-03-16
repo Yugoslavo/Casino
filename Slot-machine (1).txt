@@ -1,0 +1,22 @@
+title Diagramme de Séquence
+
+participant Slot-machine
+participant Fruit
+participant Sous
+
+
+Slot-machine -> Fruit: Random
+
+activate Slot-machine
+alt outcome 1
+Fruit -> Sous: Gagne
+activate Sous
+else outcome 2
+Fruit -> Sous: Perd
+end
+alt Sous > lim
+Sous --> Slot-machine: Restart
+deactivate Sous
+else Sous < lim
+Sous --> Sous:repeat
+end
