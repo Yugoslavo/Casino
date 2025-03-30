@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".machine_a_sous">
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="615dp"
+        android:layout_height="1198dp"
+        android:layout_marginStart="-73dp"
+        android:layout_marginTop="-54dp"
+        android:contentDescription="@null"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fond_rideau" />
+
+    <ImageButton
+        android:id="@+id/imageButton5"
+        android:layout_width="139dp"
+        android:layout_height="146dp"
+        android:layout_marginStart="352dp"
+        android:layout_marginTop="416dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="@string/image_description"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/manivelle" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="193dp"
+        android:layout_height="146dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="-3dp"
+        android:contentDescription="@null"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/banque" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="105dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="42dp"
+        android:background="@android:color/transparent"
+
+        android:contentDescription="@null"
+        android:text="@string/bouton_nom"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="380dp"
+        android:layout_height="379dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="396dp"
+        android:contentDescription="@null"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/machine_sous"
+/>
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="71dp"
+        android:layout_height="101dp"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="537dp"
+        android:contentDescription="@null"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/banane"
+/>
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="77dp"
+        android:layout_height="106dp"
+        android:layout_marginStart="204dp"
+        android:layout_marginTop="532dp"
+        android:contentDescription="@null"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dragon" />
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="75dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="283dp"
+        android:layout_marginTop="532dp"
+        android:contentDescription="@null"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fraise"
+ />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
