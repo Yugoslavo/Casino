@@ -32,7 +32,7 @@
         app:srcCompat="@drawable/slot_machine" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/slot_machine_button"
         android:layout_width="187dp"
         android:layout_height="50dp"
         android:layout_marginStart="124dp"
@@ -78,7 +78,7 @@
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/Black_jack" />
+        app:srcCompat="@drawable/blackjack" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -91,4 +91,5 @@
 
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/roulette" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

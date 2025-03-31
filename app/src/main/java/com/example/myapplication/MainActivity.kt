@@ -1,7 +1,8 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,6 +19,10 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        var slot_machine_button = findViewById<Button>(R.id.slot_machine_button)
+        slot_machine_button.setOnClickListener{
+            startActivity(Intent(this, SlotMachineActivity::class.java))
         }
 
     }

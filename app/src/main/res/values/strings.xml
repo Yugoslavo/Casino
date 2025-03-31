@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Casino</string>
     <string name="image_description">Descendre la manivelle et activer le rouleau</string>
     <string name="bouton_nom">Banque</string>
     <string name="bouton_machine">Machine à sous</string>
