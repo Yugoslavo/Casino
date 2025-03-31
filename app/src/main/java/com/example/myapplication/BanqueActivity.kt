@@ -21,20 +21,20 @@ class BanqueActivity : AppCompatActivity() {
         }
 
         val sharedPref = getSharedPreferences("BetPrefs", MODE_PRIVATE)
-        val savedBet = sharedPref.getInt("bet_value", 0) // Default to 0 if not found
+        val savedBet = sharedPref.getInt("bet_value", 0)
         val myTextView: TextView = findViewById(R.id.myTextView)
         myTextView.text  = savedBet.toString()  // Update the button text
     }
 
     fun Diminue(view: View) {
         val myTextView: TextView = findViewById(R.id.myTextView)
-        // Get the current bet amount from the TextView
+        // Get bet
         val currentBet = myTextView.text.toString().toIntOrNull() ?: 0
-        // Increase the bet by 100
+        // Increase bet by 100
         if (currentBet <= 0) return
 
         val newBet =  currentBet - 100
-        // Update the TextView with the new bet amount
+        // Update the TextView
         myTextView.text = newBet.toString()
 
         // Save the new value to SharedPreferences
@@ -47,11 +47,11 @@ class BanqueActivity : AppCompatActivity() {
 
     fun Augmente(view: View) {
         val myTextView: TextView = findViewById(R.id.myTextView)
-        // Get the current bet amount from the TextView
+        // Get the current bet
         val currentBet = myTextView.text.toString().toIntOrNull() ?: 0
         // Increase the bet by 100
         val newBet = currentBet + 100
-        // Update the TextView with the new bet amount
+        // Update the TextView
         myTextView.text = newBet.toString()
 
         // Save the new value to SharedPreferences
