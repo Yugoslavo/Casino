@@ -5,4 +5,10 @@
     <string name="bouton_machine">Machine à sous</string>
     <string name="bouton_blackjack">BlackJack</string>
     <string name="bouton_roulette">Roulette</string>
+    <string name="txtbanque">Montant à miser</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="mise">0</string>
+    <string name="exit">exit</string>
+
 </resources>

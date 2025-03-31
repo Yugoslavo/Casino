@@ -13,6 +13,18 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".BanqueActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityBanque"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".banque_activity"
+            android:exported="false" />
+        <activity
             android:name=".SlotMachineActivity"
             android:exported="false" />
         <activity
