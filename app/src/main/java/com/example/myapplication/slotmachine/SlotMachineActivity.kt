@@ -2,6 +2,7 @@ package com.example.myapplication.slotmachine
 
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,9 +21,15 @@ class SlotMachineActivity : AppCompatActivity() {
             insets
         }
         val manivelle_button: ImageButton = findViewById<ImageButton>(R.id.manivelle)
+        var fruit1: ImageView = findViewById<ImageView>(R.id.fruit1)
+        var fruit2: ImageView = findViewById<ImageView>(R.id.fruit2)
+        var fruit3: ImageView = findViewById<ImageView>(R.id.fruit3)
         manivelle_button.setOnClickListener {
             machine.play(10F)
             var fruits: Array<Fruit> = machine.fruits
+            fruit1.setImageResource(fruits[0].icon)
+            fruit2.setImageResource(fruits[1].icon)
+            fruit3.setImageResource(fruits[2].icon)
         }
 
     }

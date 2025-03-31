@@ -5,23 +5,18 @@ import kotlin.math.max
 import kotlin.random.Random
 
 class SlotMachine (var luck: Int) {
-    var fruits: Array<Fruit>
-        get() {
-            return fruits
-        }
+    var fruits: Array<Fruit> = arrayOf()
+        get() = field
         set(value){
-            fruits = value
+            field = value
         }
 
-    init {
-        this.fruits = arrayOf()
-    }
 
     fun play(mise: Float): Float{
         var normalized_luck = atan(luck.toDouble()) /3.15 +0.5 // Luck est un nombre entre - inf et + inf qui représente à quel points le joueur doit être chanceux
         this.fruits = arrayOf()
         //Distribution normal: 1 - luck, bon: luck/3, mauvais: 2*luck/3
-        for (i in 1..3){
+        (1..3).forEach { i ->
             var result = Random.Default.nextFloat()
             var fruit: Fruit = when {
                 result< (1 - normalized_luck)/2 -> Grenade()
@@ -29,19 +24,19 @@ class SlotMachine (var luck: Int) {
                 (result > 1 - normalized_luck*2/3) -> Dragon()
                 else -> FruitNormal()
             }
-            fruits[i] = fruit
+            fruits += fruit
         }
-        return get_result(mise)
+        return this.get_result(mise)
     }
 
     fun get_result(mise:Float): Float{
 
         if (fruits.size < 3){
-            return play(mise)
+            return this.play(mise)
         }
 
         var found_id: Array<Int> = arrayOf()
-        var multiplier: Float = 0F;
+        var multiplier = 0F
         for (fruit in fruits) {
             if (fruit.id in found_id){
                 continue

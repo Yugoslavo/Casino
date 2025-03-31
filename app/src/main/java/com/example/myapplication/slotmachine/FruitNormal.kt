@@ -4,13 +4,11 @@ import kotlin.random.Random
 import com.example.myapplication.R
 
 class FruitNormal() : Fruit {
-    override var id:Int
-        get() {
-            return id
-        }
+    override var id:Int = 1
+        get() = field
         set(value) {
             if (1 <= this.id && this.id <= 4) {
-                id = value
+                field = value
                 this.icon = when (this.id){
                     1 -> R.drawable.fraise
                     2 -> R.drawable.orange
@@ -25,17 +23,14 @@ class FruitNormal() : Fruit {
 
         }
 
-    override var icon: Int
-        get() {
-            return icon
-        }
+    override var icon: Int = R.drawable.fraise
+        get() = field
         set(value) {
-            icon = value
+            field = value
         }
 
     init {
-        // Création du fruit, choix du type de fruit
-        this.id = Random.nextInt(1,4)
+        id = Random.nextInt(1,5)
     }
 
     override fun get_value(count: Int) : Float {

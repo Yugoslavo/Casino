@@ -73,7 +73,7 @@
         />
 
     <ImageView
-        android:id="@+id/imageView16"
+        android:id="@+id/fruit1"
         android:layout_width="71dp"
         android:layout_height="101dp"
         android:layout_marginStart="80dp"
@@ -86,7 +86,7 @@
         />
 
     <ImageView
-        android:id="@+id/imageView17"
+        android:id="@+id/fruit2"
         android:layout_width="77dp"
         android:layout_height="106dp"
         android:layout_marginStart="163dp"
@@ -98,7 +98,7 @@
         app:srcCompat="@drawable/dragon" />
 
     <ImageView
-        android:id="@+id/imageView18"
+        android:id="@+id/fruit3"
         android:layout_width="75dp"
         android:layout_height="100dp"
         android:layout_marginStart="243dp"

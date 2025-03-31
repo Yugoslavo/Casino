@@ -4,14 +4,10 @@ import com.example.myapplication.R
 
 class Dragon: Fruit {
     override var id:Int = 7
-        get() {
-            return id
-        }
+        get() = field
 
     override var icon: Int = R.drawable.dragon
-        get() {
-            return icon
-        }
+        get() = field
 
     override fun get_value(count: Int) : Float {
         /*
