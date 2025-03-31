@@ -20,24 +20,16 @@ class SlotMachineActivity : AppCompatActivity() {
             insets
         }
         updateBetValue()
+        var mise_button = findViewById<Button>(R.id.mise)
+        mise_button.setOnClickListener{
+            startActivity(Intent(this, BanqueActivity::class.java))
+        }
     }
 
     override fun onResume() {
         super.onResume()
         updateBetValue()
     }
-
-    fun openBank(view: View) {
-        //val mise: Button = findViewById(R.id.mise)
-        val intent = Intent(this, BanqueActivity::class.java)
-        startActivity(intent)
-        //val newValue = nouvelleMise()
-        //mise.text = "$newValue"
-    }
-    //fun nouvelleMise(): Int {
-    //    return 12
-    // }
-
 
     private fun updateBetValue() {
         val mise: Button = findViewById(R.id.mise)

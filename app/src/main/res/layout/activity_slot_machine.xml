@@ -50,15 +50,14 @@
         android:layout_width="105dp"
         android:layout_height="53dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:background="@android:color/transparent"
 
         android:contentDescription="@null"
         android:text="@string/bouton_nom"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="openBank"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/manivelle"
