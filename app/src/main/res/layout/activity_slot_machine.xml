@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".slot_machine">
+    tools:context=".SlotMachineActivity">
 
     <ImageView
         android:id="@+id/imageView8"
@@ -46,21 +46,22 @@
         app:srcCompat="@drawable/banque" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/mise"
         android:layout_width="105dp"
         android:layout_height="53dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="32dp"
         android:background="@android:color/transparent"
 
         android:contentDescription="@null"
         android:text="@string/bouton_nom"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="openBank"/>
 
     <ImageView
-        android:id="@+id/imageView14"
+        android:id="@+id/manivelle"
         android:layout_width="380dp"
         android:layout_height="379dp"
         android:layout_marginStart="10dp"
@@ -73,7 +74,7 @@
         />
 
     <ImageView
-        android:id="@+id/imageView16"
+        android:id="@+id/fruit1"
         android:layout_width="71dp"
         android:layout_height="101dp"
         android:layout_marginStart="80dp"
@@ -86,7 +87,7 @@
         />
 
     <ImageView
-        android:id="@+id/imageView17"
+        android:id="@+id/fruit2"
         android:layout_width="77dp"
         android:layout_height="106dp"
         android:layout_marginStart="163dp"
@@ -98,7 +99,7 @@
         app:srcCompat="@drawable/dragon" />
 
     <ImageView
-        android:id="@+id/imageView18"
+        android:id="@+id/fruit3"
         android:layout_width="75dp"
         android:layout_height="100dp"
         android:layout_marginStart="243dp"

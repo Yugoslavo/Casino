@@ -36,7 +36,7 @@
         android:layout_width="187dp"
         android:layout_height="50dp"
         android:layout_marginStart="124dp"
-        android:layout_marginTop="488dp"
+        android:layout_marginTop="500dp"
         android:backgroundTint="@color/black"
 
         android:text="Machine à sous"
