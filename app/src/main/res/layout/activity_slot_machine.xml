@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SlotMachineActivity">
+    tools:context=".slot_machine">
 
     <ImageView
         android:id="@+id/imageView8"
@@ -46,19 +46,18 @@
         app:srcCompat="@drawable/banque" />
 
     <Button
-        android:id="@+id/mise"
+        android:id="@+id/button5"
         android:layout_width="105dp"
         android:layout_height="53dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="37dp"
         android:background="@android:color/transparent"
 
         android:contentDescription="@null"
         android:text="@string/bouton_nom"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="openBank"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView14"
