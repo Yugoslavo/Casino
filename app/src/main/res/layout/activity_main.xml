@@ -11,7 +11,7 @@
         android:id="@+id/imageView12"
         android:layout_width="528dp"
         android:layout_height="1829dp"
-        android:layout_marginStart="-50dp"
+        android:layout_marginStart="4dp"
 
         android:layout_marginTop="-453dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:id="@+id/slot_machine_button"
         android:layout_width="187dp"
         android:layout_height="50dp"
-        android:layout_marginStart="124dp"
+        android:layout_marginStart="172dp"
         android:layout_marginTop="500dp"
         android:backgroundTint="@color/black"
 
