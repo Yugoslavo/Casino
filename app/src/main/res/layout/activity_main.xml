@@ -7,89 +7,85 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- Image de fond -->
     <ImageView
         android:id="@+id/imageView12"
-        android:layout_width="528dp"
-        android:layout_height="1829dp"
-        android:layout_marginStart="4dp"
-
-        android:layout_marginTop="-453dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/casino_screen" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/casino_screen"
+        android:scaleType="centerCrop" />
 
+    <!-- Machine à sous -->
     <ImageView
         android:id="@+id/imageView15"
-        android:layout_width="87dp"
-        android:layout_height="89dp"
-        android:layout_marginStart="176dp"
-
-        android:layout_marginTop="400dp"
+        android:layout_width="65dp"
+        android:layout_height="67dp"
         app:layout_constraintStart_toStartOf="parent"
-
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="320dp"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/slot_machine" />
 
     <Button
-        android:id="@+id/slot_machine_button"
-        android:layout_width="187dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="172dp"
-        android:layout_marginTop="500dp"
-        android:backgroundTint="@color/black"
-
-        android:text="Machine à sous"
+        android:id="@+id/button"
+        android:layout_width="181dp"
+        android:layout_height="46dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView15"
+        android:layout_marginTop="0dp"
+        android:backgroundTint="@color/black"
+        android:text="Machine à sous" />
 
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- BlackJack -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="70dp"
+        android:layout_height="72dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button"
+        android:layout_marginTop="-3dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/Black_jack" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="161dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="636dp"
-        android:backgroundTint="@color/black"
-        android:text="BlackJack"
+        android:layout_width="165dp"
+        android:layout_height="44dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        android:layout_marginTop="-4dp"
+        android:backgroundTint="@color/black"
+        android:text="BlackJack" />
 
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Roulette -->
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="63dp"
+        android:layout_height="59dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button2"
+        android:layout_marginTop="3dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/roulette" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="160dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="772dp"
+        android:layout_width="157dp"
+        android:layout_height="43dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView2"
+        android:layout_marginTop="0dp"
         android:backgroundTint="@color/black"
-        android:text="Roulette"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="92dp"
-        android:layout_height="94dp"
-        android:layout_marginStart="172dp"
-
-        android:layout_marginTop="552dp"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/blackjack" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="90dp"
-        android:layout_height="79dp"
-        android:layout_marginStart="176dp"
-
-        android:layout_marginTop="696dp"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/roulette" />
+        android:text="Roulette" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
