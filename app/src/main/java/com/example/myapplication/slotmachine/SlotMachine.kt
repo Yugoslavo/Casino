@@ -4,7 +4,7 @@ import kotlin.math.atan
 import kotlin.math.max
 import kotlin.random.Random
 
-class SlotMachine (var luck: Int) {
+class SlotMachine (var luck: Float) {
     var fruits: Array<Fruit> = arrayOf()
         get() = field
         set(value){

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SlotMachineActivity">
+    tools:context=".slotmachine.SlotMachineActivity">
 
     <ImageView
         android:id="@+id/imageView8"
@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/fond_rideau" />
 
     <ImageButton
-        android:id="@+id/imageButton5"
+        android:id="@+id/manivelle"
         android:layout_width="139dp"
         android:layout_height="146dp"
         android:layout_marginStart="313dp"
@@ -52,7 +52,6 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="32dp"
         android:background="@android:color/transparent"
-
         android:contentDescription="@null"
         android:text="@string/bouton_nom"
         android:textColor="@color/black"
@@ -61,7 +60,7 @@
         android:onClick="openBank"/>
 
     <ImageView
-        android:id="@+id/manivelle"
+        android:id="@+id/machine"
         android:layout_width="380dp"
         android:layout_height="379dp"
         android:layout_marginStart="10dp"

@@ -13,8 +13,8 @@ class Dragon: Fruit {
         /*
         Valeur ajoutée selon le nombre de grenades de ce type que tu obtiens
         Exemple:
-            1 grenade -> pert un quart de ta mise
-            2 grenades -> pert la moitié de la mise
+            1 dragon -> pert un quart de ta mise
+            2 dragon -> pert la moitié de la mise
             3 grenades -> pert toute la mise
          */
         var res:Float = when(count){
