@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@id/button"
         android:layout_marginTop="-3dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/Black_jack" />
+        app:srcCompat="@drawable/blackjack" />
 
     <Button
         android:id="@+id/button2"
