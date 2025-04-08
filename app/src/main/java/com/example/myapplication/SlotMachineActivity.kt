@@ -1,4 +1,4 @@
-package com.example.myapplication.slotmachine
+package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,9 +11,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.myapplication.BanqueActivity
-import com.example.myapplication.R
-import kotlin.math.min
+import com.example.myapplication.slotmachine.Fruit
+import com.example.myapplication.slotmachine.SlotMachine
 
 class SlotMachineActivity : AppCompatActivity() {
     val machine: SlotMachine = SlotMachine(luck = 0.3F)
@@ -32,7 +31,7 @@ class SlotMachineActivity : AppCompatActivity() {
         }
         val openBankButton: Button = findViewById<Button>(R.id.argent)
         openBankButton.setOnClickListener {
-            openBank(it)
+            openBank()
         }
 
         val manivelle_button: ImageButton = findViewById<ImageButton>(R.id.manivelle)
@@ -69,7 +68,7 @@ class SlotMachineActivity : AppCompatActivity() {
         updateBetValue()
     }
 
-    fun openBank(view: View) {
+    fun openBank() {
         //val mise: Button = findViewById(R.id.mise)
         val intent = Intent(this, BanqueActivity::class.java)
         startActivity(intent)

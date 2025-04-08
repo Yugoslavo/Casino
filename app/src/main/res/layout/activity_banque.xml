@@ -51,7 +51,6 @@
             android:layout_height="wrap_content"
             android:onClick="Augmente"
             android:text="@string/plus" />
-
     </LinearLayout>
 
     <Button
@@ -61,4 +60,67 @@
         android:onClick="exit"
         android:text="@string/exit"
         android:layout_marginTop="20dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Changer le montant"
+        android:layout_marginTop="30dp"
+        />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp">
+        <Button
+            android:id="@+id/Add25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="ChangeValue25"
+            android:text="25"
+            android:layout_marginTop="10dp" />
+        <Button
+            android:id="@+id/Add15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="ChangeValue15"
+            android:text="15"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+
+            <Button
+                android:id="@+id/Add50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="ChangeValue50"
+                android:text="50"
+                android:layout_marginTop="10dp" />
+            </LinearLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Text box (EditText) -->
+        <EditText
+            android:id="@+id/myEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Another amount"
+            android:inputType="text" />
+
+        <!-- Button to get the text -->
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:onClick="getTextFromEditText"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
 </LinearLayout>

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".slotmachine.SlotMachineActivity">
+    tools:context=".SlotMachineActivity">
 
     <ImageView
         android:id="@+id/imageView8"
@@ -68,6 +68,7 @@
         android:contentDescription="@null"
         android:text="@string/bouton_nom"
         android:textColor="@color/black"
+        android:onClick="openBank"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
