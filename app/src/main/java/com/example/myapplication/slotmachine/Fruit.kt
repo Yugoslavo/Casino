@@ -14,5 +14,5 @@ interface Fruit {
      */
     var icon: Int // id vers l'image du fruit
 
-    fun get_value(count: Int) : Float
+    fun getValue(count: Int) : Float
 }

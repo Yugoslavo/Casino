@@ -9,7 +9,7 @@ class Grenade:Fruit {
     override var icon: Int = R.drawable.grenade
         get() = field
 
-    override fun get_value(count: Int) : Float {
+    override fun getValue(count: Int) : Float {
         /*
         Valeur ajoutée selon le nombre de grenades de ce type que tu obtiens
         Exemple:

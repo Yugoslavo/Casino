@@ -10,5 +10,6 @@
     <string name="plus">+</string>
     <string name="mise">0</string>
     <string name="exit">exit</string>
+    <string name="enter_bet_hint">Mise à entrer</string>
 
 </resources>

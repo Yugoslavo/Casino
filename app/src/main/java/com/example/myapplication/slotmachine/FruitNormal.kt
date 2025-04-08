@@ -33,7 +33,7 @@ class FruitNormal() : Fruit {
         id = Random.nextInt(1,5)
     }
 
-    override fun get_value(count: Int) : Float {
+    override fun getValue(count: Int) : Float {
         /*
         Valeur ajoutée selon le nombre de fruits de ce type que tu obtiens
         Exemple:

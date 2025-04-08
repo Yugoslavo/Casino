@@ -14,7 +14,6 @@
         android:layout_marginStart="-55dp"
         android:layout_marginTop="-54dp"
         android:contentDescription="@null"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/fond_rideau" />
@@ -45,12 +44,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/banque" />
 
+    <EditText
+        android:id="@+id/mise_input"
+        android:layout_width="193dp"
+        android:layout_height="146dp"
+        android:layout_marginStart="200dp"
+        android:background="@drawable/banque"
+        android:gravity="center"
+        android:hint="@string/enter_bet_hint"
+        android:inputType="number"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-        android:id="@+id/mise"
-        android:layout_width="105dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="28dp"
+        android:id="@+id/argent"
+        android:layout_width="145dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="32dp"
         android:background="@android:color/transparent"
         android:contentDescription="@null"
         android:text="@string/bouton_nom"
@@ -68,8 +81,7 @@
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/machine_sous"
-        />
+        app:srcCompat="@drawable/machine_sous" />
 
     <ImageView
         android:id="@+id/fruit1"
@@ -81,8 +93,7 @@
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/banane"
-        />
+        app:srcCompat="@drawable/banane" />
 
     <ImageView
         android:id="@+id/fruit2"
@@ -106,7 +117,18 @@
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/fraise"
-        />
+        app:srcCompat="@drawable/fraise" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="154dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="53dp"
+        android:fontFamily="@font/cinzel"
+        android:text="Mise"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/argent"
+        app:layout_constraintTop_toTopOf="@+id/mise_input" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

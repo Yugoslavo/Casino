@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
@@ -29,14 +30,28 @@ class SlotMachineActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val openBankButton: Button = findViewById<Button>(R.id.argent)
+        openBankButton.setOnClickListener {
+            openBank(it)
+        }
+
         val manivelle_button: ImageButton = findViewById<ImageButton>(R.id.manivelle)
         var fruit1: ImageView = findViewById<ImageView>(R.id.fruit1)
         var fruit2: ImageView = findViewById<ImageView>(R.id.fruit2)
         var fruit3: ImageView = findViewById<ImageView>(R.id.fruit3)
         manivelle_button.setOnClickListener {
-            val argent_button: Button = findViewById(R.id.mise)
+            val argent_button: Button = openBankButton
             var argent = argent_button.text.toString().toFloat()
-            val mise = min(15F,argent)
+            val mise_view: EditText = findViewById<EditText>(R.id.mise_input)
+            var mise_text = mise_view.text.toString()
+            var mise = when(mise_text){
+                "" -> 0F
+                else -> mise_text.toFloat()
+            }
+            if (argent < mise){
+                mise = argent
+                mise_view.setText(mise.toString())
+            }
             var result = machine.play(mise)
             argent -= mise
             argent += result
@@ -67,7 +82,7 @@ class SlotMachineActivity : AppCompatActivity() {
 
 
     private fun updateBetValue() {
-        val mise: Button = findViewById(R.id.mise)
+        val mise: Button = findViewById(R.id.argent)
         // sauvegarde bet
         val sharedPref = getSharedPreferences("BetPrefs", MODE_PRIVATE)
         val savedBet = sharedPref.getInt("bet_value", 0) // Default to 0

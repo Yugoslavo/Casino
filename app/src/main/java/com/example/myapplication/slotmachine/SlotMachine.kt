@@ -26,10 +26,10 @@ class SlotMachine (var luck: Float) {
             }
             fruits += fruit
         }
-        return this.get_result(mise)
+        return this.getResult(mise)
     }
 
-    fun get_result(mise:Float): Float{
+    private fun getResult(mise:Float): Float{
 
         if (fruits.size < 3){
             return this.play(mise)
@@ -43,7 +43,7 @@ class SlotMachine (var luck: Float) {
             }
             var count = fruits.count { x -> x.id == fruit.id }
             found_id += fruit.id
-            multiplier += fruit.get_value(count)
+            multiplier += fruit.getValue(count)
         }
         multiplier = max(0F, multiplier)
         return multiplier*mise
