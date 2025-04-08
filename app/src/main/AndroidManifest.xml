@@ -16,7 +16,7 @@
             android:name=".black_jack"
             android:exported="false" />
         <activity
-            android:name=".SlotMachineActivity"
+            android:name=".slotmachine.SlotMachineActivity"
             android:exported="false" />
         <activity
             android:name=".BanqueActivity"
