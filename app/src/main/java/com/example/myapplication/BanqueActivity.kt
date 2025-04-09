@@ -22,30 +22,27 @@ class BanqueActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        val sharedPref = getSharedPreferences("BetPrefs", MODE_PRIVATE)
-        val savedBet = sharedPref.getInt("bet_value", 0)
+        val player = Player.getInstance(context = this.applicationContext)
+        val playerMoney = player.money
         val myTextView: TextView = findViewById(R.id.myTextView)
-        myTextView.text  = savedBet.toString()  // Update the button text
+        myTextView.text  = playerMoney.toString()  // Update the button text
     }
+
     private var decreaseValue = 50
     fun Diminue(view: View) {
         val myTextView: TextView = findViewById(R.id.myTextView)
         // Get bet
         val currentBet = myTextView.text.toString().toIntOrNull() ?: 0
         // Increase bet by 100
-        if (currentBet <= 0) return
+        if (currentBet - decreaseValue <= 0) return
 
         val newBet =  currentBet - decreaseValue
         // Update the TextView
         myTextView.text = newBet.toString()
 
-        // Save the new value to SharedPreferences
-        val sharedPref = getSharedPreferences("BetPrefs", MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            putInt("bet_value", newBet)
-            apply()
-        }
+        // Save the new value to Player
+        val player = Player.getInstance(context = this.applicationContext)
+        player.addMoney(-1*decreaseValue.toFloat())
     }
 
     fun Augmente(view: View) {
@@ -57,12 +54,9 @@ class BanqueActivity : AppCompatActivity() {
         // Update the TextView
         myTextView.text = newBet.toString()
 
-        // Save the new value to SharedPreferences
-        val sharedPref = getSharedPreferences("BetPrefs", MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            putInt("bet_value", newBet)
-            apply()
-        }
+        // Save the new value to player
+        val player = Player.getInstance(context = this.applicationContext)
+        player.addMoney(decreaseValue.toFloat())
     }
     fun ChangeValue50(view: View) {
         decreaseValue = 50
@@ -75,6 +69,7 @@ class BanqueActivity : AppCompatActivity() {
     fun ChangeValue15(view: View) {
         decreaseValue = 15
     }
+
     fun getTextFromEditText(view: View) {
         val editText: EditText = findViewById(R.id.myEditText)
         val userInput = editText.text.toString()
@@ -83,9 +78,10 @@ class BanqueActivity : AppCompatActivity() {
             Toast.makeText(this, "Integer please!", Toast.LENGTH_SHORT).show()
             decreaseValue = 0
         } else {
-            decreaseValue = intValue }
-
+            decreaseValue = intValue
+        }
     }
+
     fun exit(view: View) {
         val intent = Intent(this, SlotMachineActivity::class.java)
         startActivity(intent)
