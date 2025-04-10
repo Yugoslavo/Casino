@@ -53,11 +53,9 @@ class black_jack : AppCompatActivity() {
     data class Card (val suit: String, val rank : String, val value : Int)
 
     //Put the card nbr 1 into your hand
-
     fun CardReveal(view: View) {
         if (deck.isNotEmpty()) {
             val firstCard = deck[0]
-            deck.removeAt(0)
             playerHand.add(firstCard)
             aiPlayTurn()
         }

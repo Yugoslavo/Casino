@@ -2,6 +2,8 @@ package com.example.myapplication.slotmachine
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -11,16 +13,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.BanqueActivity
+import com.example.myapplication.Player
 import com.example.myapplication.R
 
 class SlotMachineActivity : AppCompatActivity() {
-    val machine: SlotMachine = SlotMachine(luck = 0.3F)
-    //
+    lateinit var player: Player
+    lateinit var machine: SlotMachine
+
     /*
     après quelques essais, la chance à 0.3 possède une espérance légèrement positive
     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        player = Player.getInstance(context = this.applicationContext)
+        machine = SlotMachine(luck = player.luck)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_slot_machine)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -33,6 +40,22 @@ class SlotMachineActivity : AppCompatActivity() {
             openBank()
         }
 
+        val mise_view: EditText = findViewById<EditText>(R.id.mise_input)
+        mise_view.setText(player.bet.toString())
+        mise_view.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                if (mise_view.text.isEmpty()) {
+                    player.bet = 0F
+                }
+                else {
+                    val bet = mise_view.text.toString().toFloat()
+                    player.bet = bet
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
+
         val manivelle_button: ImageButton = findViewById<ImageButton>(R.id.manivelle)
         var fruit1: ImageView = findViewById<ImageView>(R.id.fruit1)
         var fruit2: ImageView = findViewById<ImageView>(R.id.fruit2)
@@ -40,7 +63,6 @@ class SlotMachineActivity : AppCompatActivity() {
         manivelle_button.setOnClickListener {
             val argent_button: Button = openBankButton
             var argent = argent_button.text.toString().toFloat()
-            val mise_view: EditText = findViewById<EditText>(R.id.mise_input)
             var mise_text = mise_view.text.toString()
             var mise = when(mise_text){
                 "" -> 0F
@@ -49,10 +71,12 @@ class SlotMachineActivity : AppCompatActivity() {
             if (argent < mise){
                 mise = argent
                 mise_view.setText(mise.toString())
+                player.bet = mise
             }
             var result = machine.play(mise)
             argent -= mise
             argent += result
+            player.addMoney(result - mise)
             argent_button.text = argent.toString()
             println("Tu as comme argent : $argent")
             var fruits: Array<Fruit> = machine.fruits
@@ -62,6 +86,7 @@ class SlotMachineActivity : AppCompatActivity() {
         }
         updateBetValue()
     }
+
     override fun onResume() {
         super.onResume()
         updateBetValue()
@@ -80,11 +105,10 @@ class SlotMachineActivity : AppCompatActivity() {
 
 
     private fun updateBetValue() {
-        val mise: Button = findViewById(R.id.argent)
+        val bank: Button = findViewById(R.id.argent)
         // sauvegarde bet
-        val sharedPref = getSharedPreferences("BetPrefs", MODE_PRIVATE)
-        val savedBet = sharedPref.getInt("bet_value", 0) // Default to 0
-        mise.text = savedBet.toString()  // Update the button
+        val playerMoney = player.money // Default to 0
+        bank.text = playerMoney.toString()  // Update the button
     }
 
 }
