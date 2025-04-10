@@ -1,66 +1,152 @@
 @startuml
-interface Fruit {
-    +id: Int
-    +icon: Int
-    +getValue(count: Int): Float
+package com.example.myapplication {
+    class Player {
+        - name: String
+        - money: Float
+        - bet: Float
+        - luck: Float
+        + addMoney(money: Float): void
+        + getInstance(context: Context): Player
+        + destroyInstance(): void
+    }
+
+    class Card {
+        + suit: String
+        + rank: String
+        + value: Int
+        + imageResId: Int
+    }
+
+    class MainActivity {
+        + onCreate(savedInstanceState: Bundle): void
+    }
+
+    class BanqueActivity {
+        + Diminue(view: View): void
+        + Augmente(view: View): void
+        + ChangeValue50(view: View): void
+        + ChangeValue25(view: View): void
+        + ChangeValue15(view: View): void
+        + getTextFromEditText(view: View): void
+        + exit(view: View): void
+    }
+
+    class black_jack {
+        - deck: List<Card>
+        - playerHand: List<Card>
+        - aiHand: List<Card>
+        - playerHasStopped: Boolean
+        - aiHasStopped: Boolean
+        + playerStop(view: View): void
+        + aiPlayTurn(): void
+        + calculatePoints(hand: List<Card>): Int
+    }
 }
 
-class Dragon {
-    +id: Int = 7
-    +icon: Int = R.drawable.dragon
-    +getValue(count: Int): Float
+package com.example.myapplication.pyramid {
+    class Ball {
+        - isMoving: Boolean
+        - radius: Float
+        - gravity: Float
+        - vSpeed: Float
+        - hSpeed: Float
+        + draw(canvas: Canvas, paint: Paint): void
+        + move(elapsedTimeMS: Double): void
+        + update(updateSpeed: (Float, Float) -> ((Float, Float) -> Array<Float>)): void
+    }
+
+    class PyramidActivity {
+        + ballHit(x: Float, ballBet: Float): void
+    }
+
+    class PyramidView {
+        - everyObjects: EveryObjects
+        + addBall(bet: Float): void
+        + updatePositions(elapsedTimeMS: Double): void
+    }
+
+    class EveryObjects {
+        - ballList: List<Ball>
+        - obstacleList: List<Obstacle>
+    }
+
+    interface Figure {
+        + draw(canvas: Canvas, paint: Paint): void
+    }
+
+    interface Observer {
+        + update(updateSpeed: (Float, Float) -> ((Float, Float) -> Array<Float>)): void
+    }
+
+    abstract class Obstacle {
+        + draw(canvas: Canvas, paint: Paint): void
+        + callObservers(): void
+    }
+
+    class RoundObstacle {
+        + callObservers(): void
+    }
+
+    class Wall {
+        + callObservers(): void
+    }
+
+    class Subject {
+        - observers: List<Observer>
+        + attach(obs: Observer): void
+        + detach(obs: Observer): void
+        + callObservers(): void
+    }
 }
 
-class Durian {
-    +id: Int = 5
-    +icon: Int = R.drawable.grenade
-    +getValue(count: Int): Float
+package com.example.myapplication.slotmachine {
+    interface Fruit {
+        + getValue(count: Int): Float
+    }
+
+    class FruitNormal {
+        + getValue(count: Int): Float
+    }
+
+    class Grenade {
+        + getValue(count: Int): Float
+    }
+
+    class Durian {
+        + getValue(count: Int): Float
+    }
+
+    class Dragon {
+        + getValue(count: Int): Float
+    }
+
+    class SlotMachine {
+        - fruits: Array<Fruit>
+        + play(mise: Float): Float
+    }
+
+    class SlotMachineActivity {
+        + openBank(): void
+    }
 }
 
-class Grenade {
-    +id: Int = 5
-    +icon: Int = R.drawable.grenade
-    +getValue(count: Int): Float
-}
-
-class FruitNormal {
-    +id: Int = 1
-    +icon: Int = R.drawable.fraise
-    +getValue(count: Int): Float
-}
-
-class SlotMachine {
-    +luck: Float
-    +fruits: Array<Fruit>
-    +play(mise: Float): Float
-    +getResult(mise: Float): Float
-}
-
-class SlotMachineActivity {
-    +machine: SlotMachine
-    +onCreate(savedInstanceState: Bundle): Unit
-    +onResume(): Unit
-    +openBank(view: View): Unit
-    +updateBetValue(): Unit
-}
-
-class BanqueActivity {
-    +onCreate(savedInstanceState: Bundle): Unit
-    +Diminue(view: View): Unit
-    +Augmente(view: View): Unit
-    +exit(view: View): Unit
-}
-
-class MainActivity {
-    +onCreate(savedInstanceState: Bundle): Unit
-}
-
-Fruit <|.. Dragon
-Fruit <|.. Durian
-Fruit <|.. Grenade
-Fruit <|.. FruitNormal
-SlotMachine *-- Fruit
-SlotMachineActivity *-- SlotMachine
-BanqueActivity *-- SlotMachineActivity
-MainActivity *-- SlotMachineActivity
+Player --> PyramidActivity
+Player --> SlotMachineActivity
+Player --> BanqueActivity
+PyramidActivity --> PyramidView
+PyramidView --> EveryObjects
+EveryObjects --> Ball
+EveryObjects --> Obstacle
+Obstacle <|-- RoundObstacle
+Obstacle <|-- Wall
+Subject <|-- Obstacle
+Observer <|.. Ball
+Figure <|.. Ball
+Figure <|.. Obstacle
+SlotMachineActivity --> SlotMachine
+SlotMachine --> Fruit
+Fruit <|-- FruitNormal
+Fruit <|-- Grenade
+Fruit <|-- Durian
+Fruit <|-- Dragon
 @enduml
