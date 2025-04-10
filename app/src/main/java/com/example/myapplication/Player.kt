@@ -33,6 +33,9 @@ class Player (private val context: Context){
             }else {
                 field = value
             }
+            if (bet > field) {
+                bet = field
+            }
             runBlocking {
                 updateValues()
             }
@@ -40,7 +43,11 @@ class Player (private val context: Context){
 
     var bet: Float = 0F
         set(value) {
-            field = value
+            if (value > money) {
+                field = money
+            } else {
+                field = value
+            }
             runBlocking {
                 updateValues()
             }

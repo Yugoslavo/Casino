@@ -15,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.BanqueActivity
 import com.example.myapplication.Player
 import com.example.myapplication.R
+import kotlin.apply
+import androidx.core.content.edit
 
 class SlotMachineActivity : AppCompatActivity() {
     lateinit var player: Player
@@ -84,12 +86,21 @@ class SlotMachineActivity : AppCompatActivity() {
             fruit2.setImageResource(fruits[1].icon)
             fruit3.setImageResource(fruits[2].icon)
         }
-        updateBetValue()
+        updateMoneyValue()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        // Sauvegarde de la dernière activité dans les SharedPreferences afin que la banque puisse savoir où on était avant
+        sharedPreferences.edit() {
+            putString("last_activity", "SlotMachineActivity")
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        updateBetValue()
+        updateMoneyValue()
     }
 
     fun openBank() {
@@ -99,12 +110,8 @@ class SlotMachineActivity : AppCompatActivity() {
         //val newValue = nouvelleMise()
         //mise.text = "$newValue"
     }
-    //fun nouvelleMise(): Int {
-    //    return 12
-    // }
 
-
-    private fun updateBetValue() {
+    private fun updateMoneyValue() {
         val bank: Button = findViewById(R.id.argent)
         // sauvegarde bet
         val playerMoney = player.money // Default to 0
