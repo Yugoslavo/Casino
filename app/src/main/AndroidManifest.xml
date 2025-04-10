@@ -17,6 +17,9 @@
             android:name=".black_jack"
             android:exported="false" />
         <activity
+            android:name=".pyramid.PyramidActivity"
+            android:exported="false" />
+        <activity
             android:name=".slotmachine.SlotMachineActivity"
             android:exported="false" />
         <activity

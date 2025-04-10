@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,14 +9,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.myapplication.pyramid.PyramidActivity
 import com.example.myapplication.slotmachine.SlotMachineActivity
+import kotlin.apply
 
 class BanqueActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_banque)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -28,13 +33,13 @@ class BanqueActivity : AppCompatActivity() {
         myTextView.text  = playerMoney.toString()  // Update the button text
     }
 
-    private var decreaseValue = 50
+    private var decreaseValue = 50f
     fun Diminue(view: View) {
         val myTextView: TextView = findViewById(R.id.myTextView)
         // Get bet
-        val currentBet = myTextView.text.toString().toIntOrNull() ?: 0
+        val currentBet = myTextView.text.toString().toFloatOrNull() ?: 0f
         // Increase bet by 100
-        if (currentBet - decreaseValue <= 0) return
+        if (currentBet - decreaseValue <= 0f) return
 
         val newBet =  currentBet - decreaseValue
         // Update the TextView
@@ -48,7 +53,7 @@ class BanqueActivity : AppCompatActivity() {
     fun Augmente(view: View) {
         val myTextView: TextView = findViewById(R.id.myTextView)
         // Get the current bet
-        val currentBet = myTextView.text.toString().toIntOrNull() ?: 0
+        val currentBet = myTextView.text.toString().toFloatOrNull() ?: 0f
         // Increase the bet by 100
         val newBet = currentBet + decreaseValue
         // Update the TextView
@@ -59,31 +64,45 @@ class BanqueActivity : AppCompatActivity() {
         player.addMoney(decreaseValue.toFloat())
     }
     fun ChangeValue50(view: View) {
-        decreaseValue = 50
+        decreaseValue = 50f
     }
 
     fun ChangeValue25(view: View) {
-        decreaseValue = 25
+        decreaseValue = 25f
     }
 
     fun ChangeValue15(view: View) {
-        decreaseValue = 15
+        decreaseValue = 15f
     }
 
     fun getTextFromEditText(view: View) {
         val editText: EditText = findViewById(R.id.myEditText)
         val userInput = editText.text.toString()
-        val intValue = userInput.toIntOrNull()
+        val intValue = userInput.toFloatOrNull()
         if (intValue == null) {
             Toast.makeText(this, "Integer please!", Toast.LENGTH_SHORT).show()
-            decreaseValue = 0
+            decreaseValue = 0f
         } else {
             decreaseValue = intValue
         }
     }
 
     fun exit(view: View) {
-        val intent = Intent(this, SlotMachineActivity::class.java)
+        val context = this.applicationContext
+        val sharedPreferences = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val lastActivityName = sharedPreferences.getString("last_activity", null)
+        // Retour dans la dernière activité visitée. Son nom est stocké dans les SharedPreferences
+        val intent = when (lastActivityName){
+            "SlotMachineActivity" -> {
+                Intent(this, SlotMachineActivity::class.java)
+            }
+            "PyramidActivity" -> {
+                Intent(this, PyramidActivity::class.java)
+            }
+            else -> {
+                Intent(this, MainActivity::class.java)
+            }
+        }
         startActivity(intent)
     }
 }
