@@ -83,7 +83,6 @@ class BanqueActivity : AppCompatActivity() {
     }
 
     fun exit(view: View) {
-        val intent = Intent(this, SlotMachineActivity::class.java)
-        startActivity(intent)
+        onBackPressed()
     }
 }
