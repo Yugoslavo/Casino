@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.util.Log
 
 class black_jack : AppCompatActivity() {
     private val deck = mutableListOf<Card>()
@@ -29,18 +30,54 @@ class black_jack : AppCompatActivity() {
 
 //        deckButton.visibility = View.GONE
 
-        val suits = listOf("♠", "♥", "♦", "♣")
-        val ranks = listOf("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")
+        // Liste des couleurs (spades = ♠, hearts = ♥, etc.)
+        val suits = listOf("spades", "hearts", "diamonds", "clubs")
+        val suitSymbols = mapOf(
+            "spades" to "♠",
+            "hearts" to "♥",
+            "diamonds" to "♦",
+            "clubs" to "♣"
+        )
+
+        // Liste des rangs + leurs valeurs
+        val rankMap = mapOf(
+            "ace" to Pair("A", 11),
+            "two" to Pair("2", 2),
+            "three" to Pair("3", 3),
+            "four" to Pair("4", 4),
+            "five" to Pair("5", 5),
+            "six" to Pair("6", 6),
+            "seven" to Pair("7", 7),
+            "eight" to Pair("8", 8),
+            "nine" to Pair("9", 9),
+            "ten" to Pair("10", 10),
+            "jack" to Pair("J", 10),
+            "queen" to Pair("Q", 10),
+            "king" to Pair("K", 10)
+        )
+
+        // Construction du deck (52 cartes)
         for (suit in suits) {
-            for (rank in ranks) {
-                val value = when (rank) {
-                    "A" -> 11
-                    "K", "Q", "J" -> 10
-                    else -> rank.toInt()
+            for ((rankName, rankInfo) in rankMap) {
+                val (rankSymbol, value) = rankInfo
+                val resName = "${rankName}_of_${suit}" // ex: "jack_of_hearts"
+                val resId = resources.getIdentifier(resName, "drawable", packageName)
+
+                if (resId != 0) {
+                    val card = Card(
+                        suit = suitSymbols[suit] ?: "?",
+                        rank = rankSymbol,
+                        value = value,
+                        imageResId = resId
+                    )
+                    deck.add(card)
+                } else {
+                    Log.e("CardLoader", "Image $resName not found in drawable")
                 }
-                deck.add(Card(suit, rank, value))
             }
         }
+
+
         deck.shuffle()
         repeat(2){
         playerHand.add(deck.random().also { deck.remove(it) })
@@ -49,17 +86,7 @@ class black_jack : AppCompatActivity() {
     }
 
 
-    // Data Class for cards
-    data class Card (val suit: String, val rank : String, val value : Int)
 
-    //Put the card nbr 1 into your hand
-    fun CardReveal(view: View) {
-        if (deck.isNotEmpty()) {
-            val firstCard = deck[0]
-            playerHand.add(firstCard)
-            aiPlayTurn()
-        }
-    }
     //Each time the player plays the AI plays next
 
         fun aiPlayTurn() {
