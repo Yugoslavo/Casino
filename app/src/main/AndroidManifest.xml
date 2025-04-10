@@ -17,11 +17,12 @@
             android:name=".Black_Jack"
             android:exported="false" />
         <activity
-            android:name=".initblackjack"
+            android:name=".Initblackjack"
             android:exported="false" />
         <activity
-            android:name=".black_jack"
-            android:exported="false" />
+            android:name=".Black_Jack"
+            android:exported="false"
+            tools:ignore="DuplicateActivity" />
         <activity
             android:name=".slotmachine.SlotMachineActivity"
             android:exported="false" />
