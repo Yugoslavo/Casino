@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Button
+import android.content.Intent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -182,7 +184,8 @@ class Black_Jack : AppCompatActivity() {
             val resultTextView = findViewById<TextView>(R.id.myTextView)
             resultTextView.text = result
 
-
+            val returnButton = findViewById<Button>(R.id.button4)
+            returnButton.visibility = View.VISIBLE
 
         }
     }
@@ -212,5 +215,10 @@ class Black_Jack : AppCompatActivity() {
 
     }
 
+    fun returnToHome(view: View) {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish() // Optionnel, pour éviter que l'utilisateur revienne ici avec "back"
+    }
 
 }
