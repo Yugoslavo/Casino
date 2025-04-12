@@ -144,7 +144,7 @@ class Black_Jack : AppCompatActivity() {
     }
     private fun checkIfGameShouldEnd() {
         if (playerHasStopped && aiHasStopped) {
-            val mainIA = aiHand //liste de card
+            val mainIA = aiHand.toMutableList()
             val imageViews = listOf(
                 findViewById<ImageView>(R.id.imageView27),
                 findViewById<ImageView>(R.id.imageView24),
@@ -166,6 +166,7 @@ class Black_Jack : AppCompatActivity() {
                     cardsIterator.remove()
                 }
             }
+
             val playerPoints = calculatePoints(playerHand)
             val aiPoints = calculatePoints(aiHand)
 

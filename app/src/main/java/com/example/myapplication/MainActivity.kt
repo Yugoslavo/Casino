@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
         var jeux2 = findViewById<Button>(R.id.button2)
         jeux2.setOnClickListener{
-            startActivity(Intent(this, Black_Jack::class.java))
+            startActivity(Intent(this, Initblackjack::class.java))
             //startActivity(Intent(this, Black_jack::class.java))
 
 
