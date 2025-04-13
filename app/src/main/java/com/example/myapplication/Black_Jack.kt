@@ -216,7 +216,7 @@ class Black_Jack : AppCompatActivity() {
     }
 
     fun returnToHome(view: View) {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, Initblackjack::class.java)
         startActivity(intent)
         finish() // Optionnel, pour éviter que l'utilisateur revienne ici avec "back"
     }
