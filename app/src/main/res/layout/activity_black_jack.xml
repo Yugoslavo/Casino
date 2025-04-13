@@ -250,6 +250,8 @@
         android:text="Retour menu"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="returnToHome"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
