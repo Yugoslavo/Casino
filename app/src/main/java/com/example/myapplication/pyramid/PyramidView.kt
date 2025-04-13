@@ -23,10 +23,10 @@ class PyramidView @JvmOverloads constructor (context: Context, attributes: Attri
 
     // Position des différents obstacles
     val obstaclePosX = mutableListOf<Int>(
-        0, -90, 90, -180, 0, 180, -270, -90, 90, 270, -360, -180, 0, 180, 360
+        0, -80, 80, -160, 0, 160, -240, -80, 80, 240, -320, -160, 0, 160, 320
     )
     val obstaclePosY = mutableListOf<Int>(
-        0, 90, 90, 180, 180, 180, 270, 270, 270, 270, 360, 360, 360, 360, 360
+        0, 80, 80, 160, 160, 160, 240, 240, 240, 240, 320, 320, 320, 320, 320
     )
 
 

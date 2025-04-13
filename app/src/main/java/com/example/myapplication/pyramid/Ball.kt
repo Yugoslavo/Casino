@@ -7,7 +7,7 @@ import android.graphics.Paint
 class Ball (var bet:Float, override var x: Float = Constants.screenWidth / 2f, override var y: Float = 300f): Figure, Observer {
     var isMoving = false
     private var radius = 20f // rayon de la balle
-    private var gravity = 20f // gravité -> à régler comme on veut
+    private var gravity = 80f // gravité -> à régler comme on veut
     private var vSpeed = 0f // vitesse verticale
     private var hSpeed = 0f // vitesse horizontale mise à 0.1 afin que la balle ne reste pas coincée
 

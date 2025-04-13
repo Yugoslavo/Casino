@@ -43,9 +43,16 @@ class Wall(override var x: Float = Constants.screenWidth.toFloat(), override var
             }
         }
 
-        for (obs in observers) {
-            // On appelle la méthode update de chaque observateur
-            obs.update(updateSpeed)
+        try {
+            for (i in observers.size - 1 downTo 0) {
+                // On appelle la méthode update de chaque observateur
+                // pour mettre à jour la vitesse des balles
+                observers[i].update(updateSpeed)
+            }
+        }catch (e: Exception){
+            // On ignore les exceptions
+            // Cela arrive quand on retire une balle de la liste des observateurs
+            // et qu'on essaie de l'appeler
         }
     }
 }

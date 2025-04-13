@@ -3,6 +3,8 @@ package com.example.myapplication.pyramid
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import kotlin.math.abs
+import kotlin.math.sign
 import kotlin.math.sqrt
 
 class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override var y: Float = 400f): Obstacle() {
@@ -31,14 +33,18 @@ class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override
                     // vitesse de la balle
                     var fullSpeed = sqrt((speedX * speedX + speedY * speedY).toDouble()).toFloat()
                     // perte d'énergie
-                    fullSpeed = fullSpeed * 0.7f
+                    fullSpeed = fullSpeed * 0.3f
                     // changement de la vitesse pour qu'elle rebondisse
                     var newSpeedX: Float = -fullSpeed*dx / (distance)
                     var newSpeedY: Float = -fullSpeed*dy / (distance)
                     if (fullSpeed < 1f) {
                         //débloque la balle si elle est coincée
-                        newSpeedX = (-30..30).random().toFloat()
-                        newSpeedY = -10f
+                        if (abs(dx*-2f) < 10f) {
+                            newSpeedX = 10f
+                        }else {
+                            newSpeedX = dx*-2f
+                        }
+                        newSpeedY = -40f
                     }
                     arrayOf(newSpeedX,newSpeedY)
                 }
@@ -52,11 +58,16 @@ class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override
                 update
             }
         }
-
-        for (obs in observers) {
-            // On appelle la méthode update de chaque observateur
-            // pour mettre à jour la vitesse des balles
-            obs.update(updateSpeed)
+        try {
+            for (i in observers.size - 1 downTo 0) {
+                // On appelle la méthode update de chaque observateur
+                // pour mettre à jour la vitesse des balles
+                observers[i].update(updateSpeed)
+            }
+        }catch (e: Exception){
+            // On ignore les exceptions
+            // Cela arrive quand on retire une balle de la liste des observateurs
+            // et qu'on essaie de l'appeler
         }
     }
 

@@ -19,6 +19,8 @@ class PyramidActivity : AppCompatActivity() {
     private lateinit var playButton: Button
     private lateinit var bankButton: Button
     private lateinit var moneyTextView: TextView
+    private var results = arrayOf<Float>(0f, 0f, 0f, 0f, 0f, 0f, 0f)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,20 +85,51 @@ class PyramidActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         pyramideView.resume()
+        updateMoneyValue()
+    }
+
+    private fun updateMoneyValue() {
+        // sauvegarde bet
+        val player = Player.getInstance(context = this.applicationContext)
+        val playerMoney = player.money // Default to 0
+        moneyTextView.text = playerMoney.toString()  // Update the button
     }
 
     fun ballHit(x:Float, ballBet: Float){
         // Fonction appelée lorsque la balle arrive en bas du jeu,
         // x est la position de la balle ce qui détermine le gain du joueur
         val player = Player.getInstance(context = this.applicationContext)
-        val result = when {
-            x < Constants.screenWidth/2 - 360f -> 3f*ballBet
-            x < Constants.screenWidth/2 - 180f -> 1.5f*ballBet
-            x < Constants.screenWidth/2 -> 0.5f
-            x < Constants.screenWidth/2 + 180f -> 0.5f*ballBet
-            x < Constants.screenWidth/2 + 360f -> 1.5f*ballBet
-            else -> 3f*ballBet
+        var result = 3f;
+
+        when {
+            x < Constants.screenWidth/2 - 360f -> {
+                result = 3f * ballBet
+                results[0] = results[0] + 1
+            }
+            x < Constants.screenWidth/2 - 180f -> {
+                result = 1.5f*ballBet
+                results[1] = results[1] + 1
+            }
+            x < Constants.screenWidth/2 -> {
+                result = 0.5f * ballBet
+                results[2] = results[2] + 1
+            }
+            x < Constants.screenWidth/2 + 180f -> {
+                result = 0.5f * ballBet
+                results[3] = results[3] + 1
+            }
+            x < Constants.screenWidth/2 + 360f -> {
+                result = 1.5f * ballBet
+                results[4] = results[4] + 1
+            }
+            else -> {
+                result = 3f * ballBet
+                results[5] = results[5] + 1
+            }
         }
+        //résultats de
+        // 4.0, 50.0, 111.0, 107.0, 29.0, 9.0
+        println("Resulst: ${results[0]}, ${results[1]}, ${results[2]}, ${results[3]}, ${results[4]}, ${results[5]}")
         // Ajout de l'argent chez le joueur
         player.addMoney(result)
         // On met à jour l'affichage de l'argent
