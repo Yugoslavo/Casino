@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.blackjack
 
 data class Card(
     val suit: String,    // ♠, ♥, ♦, ♣
