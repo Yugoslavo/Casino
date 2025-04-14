@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.MainActivity
+import com.example.myapplication.Player
 import com.example.myapplication.R
 
 class Black_Jack : AppCompatActivity() {
@@ -45,6 +46,7 @@ class Black_Jack : AppCompatActivity() {
             "ten" to 10,
 
             )
+
         val suits = listOf("spades", "hearts", "diamonds", "clubs")
         val ranks = listOf("ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king")
         for (suit in suits) {
@@ -183,11 +185,21 @@ class Black_Jack : AppCompatActivity() {
                 else -> "It's a tie at $playerPoints!"
             }
 
+            val player = Player(this)
+            val bet = Initblackjack.GameState.betValue
+            if(aiPoints > 21 && playerPoints < 22 || playerPoints > aiPoints){
+                player.money += 2*bet
+            }
+            if(playerPoints > 21 && aiPoints < 22 || aiPoints > playerPoints ){
+                player.money -= bet
+            }
+
             val resultTextView = findViewById<TextView>(R.id.myTextView)
             resultTextView.text = result
 
             val returnButton = findViewById<Button>(R.id.button4)
             returnButton.visibility = View.VISIBLE
+
 
         }
     }
@@ -211,9 +223,14 @@ class Black_Jack : AppCompatActivity() {
     fun playerStop(view: View) {
         playerHasStopped = true
         checkIfGameShouldEnd()
+        // Desactiver les autres boutons
+        findViewById<Button>(R.id.deckButton).isEnabled = false
+        findViewById<Button>(R.id.playerStop).isEnabled = false
+
         while(aiHasStopped == false){
             aiPlayTurn()
         }
+
 
     }
 

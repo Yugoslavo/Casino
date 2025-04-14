@@ -17,7 +17,6 @@ class Player (private val context: Context){
     val moneyKey = floatPreferencesKey("money")
     val betKey = floatPreferencesKey("bet")
     val luckKey = floatPreferencesKey("luck")
-
     var name: String = ""
         set(value) {
             field = value
