@@ -10,11 +10,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.myapplication.MainActivity
 import com.example.myapplication.Player
 import com.example.myapplication.R
 
-class Black_Jack : AppCompatActivity() {
+class BlackjackActivity : AppCompatActivity() {
     private val deck = mutableListOf<Card>()
     private val playerHand = mutableListOf<Card>()
     private val aiHand = mutableListOf<Card>()

@@ -39,7 +39,7 @@ class Initblackjack : AppCompatActivity() {
 
 
     fun startBlackJack(view: View) {
-        val intent = Intent(this, Black_Jack::class.java)
+        val intent = Intent(this, BlackjackActivity::class.java)
         startActivity(intent)
     }
 
