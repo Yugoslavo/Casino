@@ -18,9 +18,6 @@ import com.example.myapplication.R
 
 class Initblackjack : AppCompatActivity() {
     lateinit var player: Player
-    object GameState {
-        var betValue: Float = 0f
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -30,7 +27,7 @@ class Initblackjack : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val player = Player(this)
+        val player = Player.getInstance(this.applicationContext)
         val currentMoney = player.money
         val moneyButton = findViewById<Button>(R.id.argent)
         moneyButton.text = "${currentMoney} €"
@@ -39,7 +36,7 @@ class Initblackjack : AppCompatActivity() {
 
 
     fun startBlackJack(view: View) {
-        val intent = Intent(this, Black_Jack::class.java)
+        val intent = Intent(this, BlackJack::class.java)
         startActivity(intent)
     }
 
@@ -60,9 +57,8 @@ class Initblackjack : AppCompatActivity() {
             .setPositiveButton("OK") { _, _ ->
                 val newBet = input.text.toString()
                 val value = newBet.toFloatOrNull()
-
                 if (value != null) {
-                    GameState.betValue = value //Mettre dans l'object de la variable classe
+                    player.bet = value //Mettre dans l'object de la variable classe
                     changeMise.text = value.toString()
                     player.money -= value
                 } else {

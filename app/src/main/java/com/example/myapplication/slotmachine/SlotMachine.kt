@@ -30,7 +30,6 @@ class SlotMachine (var luck: Float) {
     }
 
     private fun getResult(mise:Float): Float{
-
         if (fruits.size < 3){
             return this.play(mise)
         }

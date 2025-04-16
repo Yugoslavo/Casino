@@ -23,7 +23,7 @@ class Wall(override var x: Float = Constants.screenWidth.toFloat(), override var
         var updateSpeed = {
                 ballX: Float, ballY:Float ->
             var dx = this.x - ballX // distance entre la balle et le mur
-            if (abs(dx) <= 20f+ this.width/2) {
+            if (abs(dx) <= 10f+ this.width/2) {
                 var update = {
                         speedX: Float, speedY: Float ->
                     // S'il y a collision on change la vitesse horizontalle de la balle
@@ -43,11 +43,10 @@ class Wall(override var x: Float = Constants.screenWidth.toFloat(), override var
             }
         }
 
+
         try {
-            for (i in observers.size - 1 downTo 0) {
-                // On appelle la méthode update de chaque observateur
-                // pour mettre à jour la vitesse des balles
-                observers[i].update(updateSpeed)
+            for (observer in observers) {
+                observer.update(updateSpeed)
             }
         }catch (e: Exception){
             // On ignore les exceptions

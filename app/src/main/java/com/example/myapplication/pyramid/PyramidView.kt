@@ -12,6 +12,8 @@ class PyramidView @JvmOverloads constructor (context: Context, attributes: Attri
     // C'est une vue qu'on va pouvoir mettre dans le layout d'activity_pyramid.xml
     // et qui va servir à toute la partie du jeu avec les balles
 
+    private var moneyGave = 0f
+    private var moneyGained = 0f
     private lateinit var thread: Thread
     private var drawing = false
     var canvas = Canvas()
@@ -23,22 +25,32 @@ class PyramidView @JvmOverloads constructor (context: Context, attributes: Attri
 
     // Position des différents obstacles
     val obstaclePosX = mutableListOf<Int>(
-        0, -80, 80, -160, 0, 160, -240, -80, 80, 240, -320, -160, 0, 160, 320
+        -40, 40, -80, 0, 80, -120, -40, 40,120, -160, -80, 0, 80, 160, -200, -120, - 40, 40, 120, 200, -240, - 160, - 80, 0, 80, 160, 240, -280, -200, -120, -40, 40, 120, 200, 280
     )
+    val lastRowObstacle = obstaclePosX.subList(27, 34)
     val obstaclePosY = mutableListOf<Int>(
-        0, 80, 80, 160, 160, 160, 240, 240, 240, 240, 320, 320, 320, 320, 320
+        0, 0, 50, 50, 50, 100, 100, 100, 100, 150, 150, 150, 150, 150, 200, 200, 200, 200, 200, 200, 250, 250, 250, 250, 250, 250, 250,  300, 300, 300, 300, 300, 300, 300, 300
     )
 
+    val textPosx = mutableListOf<Int>(
+        -320, -240, -160,-80,  0, 80, 160, 240, 320
+    )
+
+    val textPosy = 350f
+    //Espérence de ~0.7
+    val multipliers = mutableListOf<Float>(
+        3f,1.5f,1f,0.5f, 0.3f, 0.5f, 1f, 1.5f, 3f
+    )
 
     var everyObjects : EveryObjects
 
-
     init {
+        println(lastRowObstacle)
         everyObjects = EveryObjects()
 
         // Création des obstacles
         for (i in 0 until obstaclePosX.size){
-            var obstacle = RoundObstacle(x = Constants.screenWidth / 2f + obstaclePosX[i], y = Constants.screenHeight / 4f + obstaclePosY[i])
+            var obstacle = RoundObstacle(x = Constants.screenWidth / 2f + obstaclePosX[i], y = Constants.screenHeight / 2f + obstaclePosY[i])
             everyObjects.obstacleList.add(obstacle)
         }
         var wall1 = Wall(x = 0f, y = Constants.screenHeight / 2f, width = 5f, height = Constants.screenHeight.toFloat())
@@ -73,22 +85,29 @@ class PyramidView @JvmOverloads constructor (context: Context, attributes: Attri
 
             // On met à jour la position des objets (balles) et on les dessine
             updatePositions(elapsedTimeMS)
+
             draw()
         }
     }
 
     fun updatePositions(elapsedTimeMS: Double) {
-        everyObjects.ballList.filter { ball -> ball.y > Constants.screenHeight / 4f + 360 }.forEach {
+        everyObjects.ballList.filter { ball -> ball.y > Constants.screenHeight / 2f + 320 }.forEach {
                 ball ->
                 // Si les balles sont en dessous de la limite, on envoie le résultat à l'activité
-                activity.ballHit(ball.x,ball.bet)
+                moneyGave += ball.bet
+                val res = result(ball.x)*ball.bet
+                moneyGained += res
+                activity.ballHit(res)
+                val esp = moneyGained/moneyGave
+                println("espérence : $esp")
                 everyObjects.obstacleList.forEach { obstacle -> obstacle.detach(ball) }
+        }
 
-        }
-        everyObjects.ballList.removeIf {
+        everyObjects.ballList.removeAll {
             // Suppression des balles qui sont arrivées en bas de l'écran
-            ball -> ball.y > Constants.screenHeight / 4f + 360
+            ball -> ball.y > Constants.screenHeight / 2f + 320
         }
+
         for (ball in everyObjects.ballList){
             // On met à jour la position de chaque balle
             ball.move(elapsedTimeMS)
@@ -99,17 +118,25 @@ class PyramidView @JvmOverloads constructor (context: Context, attributes: Attri
         }
     }
 
+    fun result(posx: Float): Float{
+        for (i  in 0 until lastRowObstacle.size - 1){
+            if (posx < Constants.screenWidth/2 + lastRowObstacle[i]){
+                return multipliers[i]
+            }
+        }
+        return multipliers[0]
+    }
+
     // Ajoute une balle sur l'écran
     fun addBall(bet:Float) {
-        //compte des balles qui peut être utilisé pour limiter le nombre de balles en même temps
-//        val activeBalls = everyObjects.ballList.count {
-//            it.isMoving
-//        }
 
         // On crée une nouvelle balle avec la mise du joueur
         // On lui donne une position aléatoire sur l'axe des abscisses
         // afin d'éviter que toutes les balles soient au même endroit
-        val offsetX = (-50..50).random()
+        var offsetX = (-39..39).random()
+        if (offsetX == 0){
+            offsetX = 1
+        }
         val startX = Constants.screenWidth / 2f +offsetX
         var newBall = Ball(bet, x = startX)
         everyObjects.obstacleList.forEach {
@@ -123,9 +150,17 @@ class PyramidView @JvmOverloads constructor (context: Context, attributes: Attri
         // Dessin de toutes les balles et des obstacles
         if (holder.surface.isValid) {
             canvas = holder.lockCanvas()
-            canvas.drawColor(Color.BLACK)
+            canvas.drawColor(Color.BLUE)
             for (figure in everyObjects.ballList + everyObjects.obstacleList) {
                 figure.draw(canvas, paint)
+            }
+
+            paint.textSize = 20f
+            for (i in 0 until multipliers.size){
+                paint.color = Color.MAGENTA
+                canvas.drawRect(Constants.screenWidth/2f + textPosx[i].toFloat() - paint.textSize, Constants.screenHeight/2f + textPosy - 30f, Constants.screenWidth/2f + textPosx[i].toFloat() + paint.textSize, Constants.screenHeight/2f + textPosy + 10f, paint)
+                paint.color = Color.WHITE
+                canvas.drawText(multipliers[i].toString(), Constants.screenWidth/2f + textPosx[i].toFloat() - paint.textSize, Constants.screenHeight/2f + textPosy, paint)
             }
             holder.unlockCanvasAndPost(canvas)
         }

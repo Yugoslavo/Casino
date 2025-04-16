@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -52,6 +53,7 @@ class SlotMachineActivity : AppCompatActivity() {
                 else {
                     val bet = mise_view.text.toString().toFloat()
                     player.bet = bet
+                    mise_view.setText(player.bet.toString())
                 }
             }
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -62,6 +64,7 @@ class SlotMachineActivity : AppCompatActivity() {
         var fruit1: ImageView = findViewById<ImageView>(R.id.fruit1)
         var fruit2: ImageView = findViewById<ImageView>(R.id.fruit2)
         var fruit3: ImageView = findViewById<ImageView>(R.id.fruit3)
+
         manivelle_button.setOnClickListener {
             val argent_button: Button = openBankButton
             var argent = argent_button.text.toString().toFloat()
@@ -70,17 +73,15 @@ class SlotMachineActivity : AppCompatActivity() {
                 "" -> 0F
                 else -> mise_text.toFloat()
             }
-            if (argent < mise){
-                mise = argent
-                mise_view.setText(mise.toString())
-                player.bet = mise
+            if (mise == 0f) {
+                return@setOnClickListener
             }
             var result = machine.play(mise)
             argent -= mise
             argent += result
             player.addMoney(result - mise)
             argent_button.text = argent.toString()
-            println("Tu as comme argent : $argent")
+            mise_view.setText(player.bet.toString())
             var fruits: Array<Fruit> = machine.fruits
             fruit1.setImageResource(fruits[0].icon)
             fruit2.setImageResource(fruits[1].icon)
@@ -88,6 +89,8 @@ class SlotMachineActivity : AppCompatActivity() {
         }
         updateMoneyValue()
     }
+
+
 
     override fun onPause() {
         super.onPause()

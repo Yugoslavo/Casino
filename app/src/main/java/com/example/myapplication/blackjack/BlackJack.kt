@@ -14,7 +14,7 @@ import com.example.myapplication.MainActivity
 import com.example.myapplication.Player
 import com.example.myapplication.R
 
-class Black_Jack : AppCompatActivity() {
+class BlackJack : AppCompatActivity() {
     private val deck = mutableListOf<Card>()
     private val playerHand = mutableListOf<Card>()
     private val aiHand = mutableListOf<Card>()
@@ -46,7 +46,6 @@ class Black_Jack : AppCompatActivity() {
             "ten" to 10,
 
             )
-
         val suits = listOf("spades", "hearts", "diamonds", "clubs")
         val ranks = listOf("ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king")
         for (suit in suits) {
@@ -93,7 +92,6 @@ class Black_Jack : AppCompatActivity() {
             deck.removeAt(0)
             playerHand.add(firstCard)
 
-
             // Making a list of image views
             val imageViews = listOf(
                 findViewById<ImageView>(R.id.imageView19),
@@ -102,7 +100,6 @@ class Black_Jack : AppCompatActivity() {
                 findViewById<ImageView>(R.id.imageView21),
                 findViewById<ImageView>(R.id.imageView22),
                 findViewById<ImageView>(R.id.imageView23)
-
             )
             for (imageView in imageViews){
                 if(imageView.visibility != View.VISIBLE){
@@ -134,19 +131,12 @@ class Black_Jack : AppCompatActivity() {
                 findViewById<ImageView>(R.id.imageView28),
                 findViewById<ImageView>(R.id.imageView11)
             )
-            for(imageView in imageViews){
-                if(imageView.visibility != View.VISIBLE){
-                    imageView.visibility = View.VISIBLE
-
-                    break //Sinon ça crash
-                }
-            }
-        }
-        else{
-            aiHasStopped = true
-            checkIfGameShouldEnd()
+            imageViews.reversed().first { imageView -> imageView.visibility != View.VISIBLE }.visibility = View.VISIBLE
+            return
         }
 
+        aiHasStopped = true
+        checkIfGameShouldEnd()
     }
     private fun checkIfGameShouldEnd() {
         if (playerHasStopped && aiHasStopped) {
@@ -185,8 +175,9 @@ class Black_Jack : AppCompatActivity() {
                 else -> "It's a tie at $playerPoints!"
             }
 
-            val player = Player(this)
-            val bet = Initblackjack.GameState.betValue
+
+            val player = Player.getInstance(this.applicationContext)
+            val bet = player.bet
             if(aiPoints > 21 && playerPoints < 22 || playerPoints > aiPoints){
                 player.money += 2*bet
             }
@@ -230,7 +221,6 @@ class Black_Jack : AppCompatActivity() {
         while(aiHasStopped == false){
             aiPlayTurn()
         }
-
 
     }
 

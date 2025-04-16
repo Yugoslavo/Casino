@@ -9,11 +9,10 @@ import kotlin.math.sqrt
 
 class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override var y: Float = 400f): Obstacle() {
     // Cette classe représente les obstacles ronds qui constituent la pyramide
-
     override fun draw(canvas: Canvas, paint: Paint) {
         // Dessin de l'obstacle
         paint.color = Color.GRAY
-        canvas.drawCircle(x, y , 20f, paint)
+        canvas.drawCircle(x, y , 10f, paint)
     }
 
     override fun callObservers() {
@@ -26,26 +25,16 @@ class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override
             var dy = this.y - ballY
             var distance = sqrt(((dx * dx + dy * dy).toDouble())).toFloat()
             // On calcule la distance entre la balle et l'obstacle pour voir s'il y a collision
-            if (distance <= 40f) {
+            if (distance <= 20f) {
                 // il y a collision, on va donc changer la vitesse de la balle
                 var update = {
                     speedX: Float, speedY: Float ->
                     // vitesse de la balle
                     var fullSpeed = sqrt((speedX * speedX + speedY * speedY).toDouble()).toFloat()
-                    // perte d'énergie
-                    fullSpeed = fullSpeed * 0.3f
-                    // changement de la vitesse pour qu'elle rebondisse
+                   // perte d'énergie
+//                    fullSpeed = fullSpeed * 0.5f
                     var newSpeedX: Float = -fullSpeed*dx / (distance)
                     var newSpeedY: Float = -fullSpeed*dy / (distance)
-                    if (fullSpeed < 1f) {
-                        //débloque la balle si elle est coincée
-                        if (abs(dx*-2f) < 10f) {
-                            newSpeedX = 10f
-                        }else {
-                            newSpeedX = dx*-2f
-                        }
-                        newSpeedY = -40f
-                    }
                     arrayOf(newSpeedX,newSpeedY)
                 }
                 update
@@ -59,10 +48,8 @@ class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override
             }
         }
         try {
-            for (i in observers.size - 1 downTo 0) {
-                // On appelle la méthode update de chaque observateur
-                // pour mettre à jour la vitesse des balles
-                observers[i].update(updateSpeed)
+            for (observer in observers) {
+                observer.update(updateSpeed)
             }
         }catch (e: Exception){
             // On ignore les exceptions
@@ -70,5 +57,4 @@ class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override
             // et qu'on essaie de l'appeler
         }
     }
-
 }
