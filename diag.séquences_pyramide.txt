@@ -1,0 +1,73 @@
+@startuml
+actor "Utilisateur" as User
+
+participant "MainActivity" as MA
+participant "PyramidActivity" as PA
+participant "Player" as Player
+participant "BanqueActivity" as Bank
+
+== Démarrage ==
+User -> MA: Lance l'application
+User -> MA: Clique sur "Pyramide"
+activate MA
+MA -> PA: startActivity(PyramidActivity)
+activate PA
+deactivate MA
+
+== Initialisation de PyramidActivity ==
+PA -> Player: Player.getInstance(applicationContext)
+activate Player
+deactivate Player
+
+' Création des obstacles au démarrage du jeu
+PA -> PA: Créer obstacles (RoundObstacle, Wall, etc.)
+note right of PA: Les obstacles sont créés et ajoutés \nà la liste interne (EveryObjects.obstacleList)
+
+== Lancement d'une partie ==
+activate PA
+User -> PA: Saisit le montant de la mise
+PA -> Bank: Retire la mise du Player (mise débité)
+User -> PA: Clique sur playButton
+PA -> PA: Lâche une balle
+note right of PA: Création d'une nouvelle balle avec la mise\n- Nouvelle instance Ball(bet, position aléatoire)\n- Attachement de la balle aux obstacles
+PA -> PA: EveryObjects.ballList.add(newBall)
+PA -> PA: newBall.isMoving = true
+' Déduction immédiate de la mise
+PA -> Player: addMoney(- player.bet)
+activate Player
+PA -> UI: Update moneyTextView (nouveau solde)
+deactivate Player
+deactivate PA
+
+== Boucle de jeu et résolution ==
+note over PA: Boucle interne du jeu (run() dans PyramidView intégré dans PA)\nÀ chaque tick : mise à jour des positions, collisions et rebondissements
+' Mise à jour de la position de la balle
+PA -> Ball: move(elapsedTimeMS)
+' Détection de collision avec obstacles
+Ball -> Obstacle: callObservers() [vérification collision]
+note right of Obstacle: Pour chaque obstacle,\nSi collision (distance <= seuil),\ncalcul de la nouvelle vitesse (rebond)
+Obstacle -> Ball: update(newSpeed)
+' Si la balle atteint le bas de l'écran
+PA -> PA: Vérifier position ball (y > seuil)
+alt Balle en bas de l'écran
+    PA -> PA: ballHit(x, ball.bet)
+    PA -> Player: addMoney(gain)
+    activate Player
+    PA -> UI: Update moneyTextView
+    deactivate Player
+    PA -> PA: Remove ball from ballList
+end
+
+== Interaction Banque ==
+User -> PA: Clique sur bankButton
+activate PA
+PA -> Bank: startActivity(BanqueActivity)
+activate Bank
+Bank -> Player: Player.getInstance(applicationContext)
+activate Player
+Bank -> UI: Affiche le solde dans moneyTextView
+deactivate Player
+deactivate Bank
+deactivate PA
+
+@enduml

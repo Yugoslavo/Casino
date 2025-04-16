@@ -1,0 +1,48 @@
+@startuml
+title Diagramme de séquence – Machine à sous 🎰 avec mise et banque
+
+actor Player
+participant "MainActivity" as Main
+participant "SlotMachineActivity" as Slot
+participant "BankActivity" as Bank
+
+== Lancement du jeu ==
+Player -> Main : Lance l'application
+activate Main
+Player -> Main : Sélectionne "Machine à sous"
+Main -> Slot : startActivity(Intent)
+deactivate Main
+activate Slot
+
+== Partie de machine à sous ==
+activate Slot
+Player -> Slot : Appuie sur manivelle
+Slot -> Bank : Vérifie solde et soustrait mise
+activate Bank
+Bank -> Slot : Confirmation de la mise
+deactivate Bank
+
+Slot -> Slot : Génère les symboles aléatoires
+Slot -> Slot : Affiche les résultats
+
+alt Gain
+    Slot -> Bank : Créditer les gains
+    activate Bank
+    Bank -> Slot : Solde mis à jour
+    deactivate Bank
+    Slot -> Player : Affiche les gains
+else Perte
+    Slot -> Player : Affiche les pertes
+end
+deactivate Slot
+
+== Retour au menu ==
+Player -> Slot : Appuie sur "Retour"
+activate Slot
+Slot -> Main : finish(), retour au menu
+deactivate Slot
+activate Main
+deactivate Main
+
+@enduml
+@enduml
