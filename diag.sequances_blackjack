@@ -1,0 +1,93 @@
+@startuml
+actor "Utilisateur" as User
+
+participant "MainActivity" as Main
+participant "Initblackjack" as Init
+participant "BlackJackActivity" as Game
+participant "Player" as Player
+participant "BanqueActivity" as Bank
+
+entryspacing 0.9
+== Lancement ==
+User -> Main : Lance l'application
+activate Main
+User -> Main : Clique sur "BlackJack"
+Main -> Init : startActivity(Intent)
+deactivate Main
+activate Init
+
+== Opérations au sein de la Banque ==
+User -> Init:Cliquer sur "Banque"
+Init -> Bank: startActivity(BanqueActivity)
+activate Bank
+Bank -> Player:Lit le solde actuel
+Player-->>Bank:Donne le solde actuel
+Bank -->> User:Affiche le solde actuel
+deactivate Bank
+
+User->Init:Clique sur "Mise"
+User->Init:Entre la mise
+Init->Player:Met à jour la mise
+Player->Player:Soustrait la mise
+== Démarrage du Jeu ==
+User->Bank
+Bank -> Bank 
+Bank-->>User 
+User -> Bank 
+User -> Bank 
+ 
+Player<-Bank
+User -> Init: Clique sur "Start"
+deactivate Init
+Init -> Game:startActivity(BlackJackActivity)
+activate Game
+
+Game->Game:Création du deck
+Game->Game:deck.shuffle
+Game->Game:2x playerHand.add(Card)
+Game-->>User:Ajoute 2 cartes au joueur
+Game->Game:2x aiHand.add(Card)
+Game-->>User : Joueur voit ses 2 cartes
+
+== Tour du Joueur et du Robot ==
+
+User->Game:Clique sur "Piocher"
+Game->Game:playerHand.add(Card)
+alt if aiHand < 17
+    Game -> Game:aiHand.add(Card)
+
+else
+ Game -> Game: aiHasStopped = true
+Game->Game:CheckIfGameShouldEnd
+end
+
+== Le joueur décide d'arrêter ==
+User -> Game:Clique sur "Stop"
+Game -> Game: playerHasStopped = true
+Game -> Game: Désactive les boutons (deck et stop)
+loop While(aiHasStopped == false)
+    alt if aiHand < 17
+    Game -> Game:aiHand.add(Card)
+    
+else
+ Game -> Game: aiHasStopped = true
+Game->Game:CheckIfGameShouldEnd
+end
+
+end
+
+==Fin de partie ==
+Game -> Game:checkIfGameShouldEnd
+Game -> Game: calculatePoints(playerHand) & calculatePoints(aiHand)
+
+Game -> Player:player.money
+
+== Retour à l'accueil ==
+User -> Game:Clique sur "Retour Menu"
+Main<-Game:finish
+deactivate Game
+
+
+
+
+@enduml
