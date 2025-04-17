@@ -27,7 +27,7 @@ class Initblackjack : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val player = Player.getInstance(this.applicationContext)
+        player = Player.getInstance(this.applicationContext)
         val currentMoney = player.money
         val moneyButton = findViewById<Button>(R.id.argent)
         moneyButton.text = "${currentMoney} €"
