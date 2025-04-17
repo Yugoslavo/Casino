@@ -14,6 +14,7 @@ import com.example.myapplication.Player
 import com.example.myapplication.R
 import com.example.myapplication.blackjack.Suit
 import com.example.myapplication.blackjack.Rank
+import androidx.core.view.isVisible
 
 class BlackjackActivity : AppCompatActivity() {
     private val deck = mutableListOf<Card>()
@@ -31,10 +32,8 @@ class BlackjackActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-
-        for (suit in Suit.values()) {
-            for (rank in Rank.values()) {
+        for (suit in Suit.entries) {
+            for (rank in Rank.entries) {
                 deck.add(Card(suit, rank))
             }
         }
@@ -159,7 +158,7 @@ class BlackjackActivity : AppCompatActivity() {
             val cardsIterator = mainIA.iterator()
 
             for (imageView in imageViews) {
-                if (imageView.visibility == View.VISIBLE && cardsIterator.hasNext()) {
+                if (imageView.isVisible && cardsIterator.hasNext()) {
                     val card = cardsIterator.next()
                     val cardName = "${card.rank.displayName}_of_${card.suit.displayName}"
                     val resourceId = resources.getIdentifier(cardName, "drawable", packageName)

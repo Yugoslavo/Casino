@@ -74,15 +74,14 @@
         android:id="@+id/argent"
         android:layout_width="145dp"
         android:layout_height="55dp"
-        android:layout_marginTop="348dp"
-        android:layout_marginEnd="212dp"
+        android:layout_marginEnd="100dp"
         android:backgroundTint="#8A2222"
         android:contentDescription="@null"
         android:onClick="openBank"
         android:text="@string/bouton_nom"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/Start"
+        app:layout_constraintTop_toTopOf="@+id/Mise" />
 
     <Button
         android:id="@+id/Start"
@@ -105,17 +104,16 @@
         android:id="@+id/Mise"
         android:layout_width="145dp"
         android:layout_height="55dp"
+        android:layout_marginStart="100dp"
         android:backgroundTint="#8A2222"
         android:contentDescription="@null"
         android:onClick="changeMise"
         android:text="Mise"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.872"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Start"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.426"
+        app:layout_constraintVertical_bias="0.424"
         tools:ignore="OnClick" />
 
     <androidx.constraintlayout.widget.Guideline
