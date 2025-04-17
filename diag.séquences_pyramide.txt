@@ -50,6 +50,7 @@ alt Mise > montant en banque ou <0
 
 else Mise = 0
     PA -> PA: Désactive le bouton "Play" (bouton non cliquable)
+    User -> PA: Entre une nouvelle  mise
     
 else Mise suffisante et différente de 0
     User -> PA: Clique sur "Play"
