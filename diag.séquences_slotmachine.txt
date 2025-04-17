@@ -32,6 +32,16 @@ Slot -> Player: Met à jour la mise
 
 activate Slot
 Player -->> User: Affiche la mise
+alt Mise > montant en banque ou <0
+    Player -> Player : bloque l'exécution 
+    Player-->> User:N'affiche aucune mise
+    User ->Slot: Entre une nouvelle  mise
+
+else Mise = 0
+    Slot ->Slot: Désactive le bouton "Play" (bouton non cliquable)
+    User ->Slot: Entre une nouvelle  mise
+    
+else Mise suffisante et différente de 0
 activate Slot
 User -> Slot : Appuie sur manivelle
 Slot -> Player: soustrait la mise
@@ -41,6 +51,8 @@ deactivate Player
 Slot -> Slot : Génère les symboles aléatoires
 Slot -> Slot : Affiche les résultats
 
+end
+== Gains/Pertes ==
 alt Gain
     Slot -> Player : Créditer les gains
     activate Player
