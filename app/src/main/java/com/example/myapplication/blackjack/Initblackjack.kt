@@ -19,9 +19,6 @@ import com.example.myapplication.R
 
 class Initblackjack : AppCompatActivity() {
     lateinit var player: Player
-    object GameState {
-        var betValue: Float = 0f
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -63,7 +60,7 @@ class Initblackjack : AppCompatActivity() {
                 val value = newBet.toFloatOrNull()
 
                 if (value != null) {
-                    GameState.betValue = value //Mettre dans l'object de la variable classe
+                    player.bet = value//Mettre dans l'object de la variable classe
                     changeMise.text = value.toString()
                     player.money -= value
 
