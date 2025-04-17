@@ -39,13 +39,19 @@ User -> PA: Clique sur "Mise"
 User -> PA: Entre la mise
 PA -> Player: Met à jour la mise
 
+
 activate PA
 Player -->> User: Affiche la mise
 
-PA -> Player: Vérifie si la mise est <= au montant de la banque
-alt Mise insuffisante
+alt Mise > montant en banque ou <0
+    Player -> Player : bloque l'exécution 
+    Player-->> User:N'affiche aucune mise
+    User -> PA: Entre une nouvelle  mise
+
+else Mise = 0
     PA -> PA: Désactive le bouton "Play" (bouton non cliquable)
-else Mise suffisante
+    
+else Mise suffisante et différente de 0
     User -> PA: Clique sur "Play"
     PA -> PA: Lâche une balle avec mise
     note right of PA: Création d'une nouvelle balle avec la mise\n- Nouvelle instance Ball(bet, position aléatoire)\n- Attachement de la balle aux obstacles
