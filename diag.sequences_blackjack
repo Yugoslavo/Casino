@@ -57,10 +57,18 @@ end
 
 User->Game:Clique sur "Piocher"
 Game->Game:playerHand.add(Card)
-alt  aiHand < 17
+alt playerHand >21
+Game->Game:playerHasStopped = true
+Game->Game:aiHasStopped = True
+Game->Game:CheckIfGameShouldEnd
+else aiHand >21 
+Game->Game:aiHasStopped = True
+Game->Game:playerHasStopped = true
+Game->Game:CheckIfGameShouldEnd
+else  aiHand < 17
     Game -> Game:aiHand.add(Card)
 
-else
+else aiHand >17 && aiHand <21
  Game -> Game: aiHasStopped = true
 Game->Game:CheckIfGameShouldEnd
 end
@@ -117,10 +125,12 @@ Game -> Player
 
 == Retour à l'accueil ==
 User -> Game:Clique sur "Retour Menu"
-Main<-Game:finish
+Game -> Init:finish
 deactivate Game
 
-
-
+User->Init:Clique sur "Back"
+activate Init
+Main<-Init:finish
+deactivate Init
 
 @enduml

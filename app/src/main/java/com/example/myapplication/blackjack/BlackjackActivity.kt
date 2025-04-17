@@ -12,8 +12,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.Player
 import com.example.myapplication.R
-import com.example.myapplication.blackjack.Suit
-import com.example.myapplication.blackjack.Rank
 import androidx.core.view.isVisible
 import org.w3c.dom.Text
 
@@ -173,7 +171,7 @@ class BlackjackActivity : AppCompatActivity() {
             val aiPoints = calculatePoints(aiHand)
 
             val player = Player.getInstance(this)
-            val bet = Initblackjack.GameState.betValue // It takes the bet from the initBlackjack, it is called Mise
+            val bet = player.bet
 
             val result = when {
                 playerPoints > 21 && aiPoints > 21 -> "Both busted!"
