@@ -12,8 +12,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.Player
 import com.example.myapplication.R
-import com.example.myapplication.blackjack.Suit
-import com.example.myapplication.blackjack.Rank
 import androidx.core.view.isVisible
 
 class BlackjackActivity : AppCompatActivity() {
