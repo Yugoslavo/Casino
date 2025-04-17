@@ -74,15 +74,14 @@
         android:id="@+id/argent"
         android:layout_width="145dp"
         android:layout_height="55dp"
-        android:layout_marginTop="348dp"
-        android:layout_marginEnd="212dp"
+        android:layout_marginEnd="220dp"
         android:backgroundTint="#8A2222"
         android:contentDescription="@null"
         android:onClick="openBank"
         android:text="@string/bouton_nom"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/Mise" />
 
     <Button
         android:id="@+id/Start"
