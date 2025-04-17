@@ -10,7 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class Player (private val context: Context){
+class Player private constructor(private val context: Context){
 
     val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     val nameKey = stringPreferencesKey("name")

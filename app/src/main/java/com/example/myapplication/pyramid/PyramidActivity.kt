@@ -20,7 +20,7 @@ class PyramidActivity : AppCompatActivity() {
     private lateinit var playButton: Button
     private lateinit var bankButton: Button
     private lateinit var moneyTextView: TextView
-    private var results = arrayOf<Float>(0f, 0f, 0f, 0f, 0f, 0f, 0f)
+//    private var results = arrayOf<Float>(0f, 0f, 0f, 0f, 0f, 0f, 0f) //Utilisé pour les tests
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,11 +86,6 @@ class PyramidActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         pyramideView.pause()
-        // Sauvegarde de la dernière activité dans les SharedPreferences afin que la banque puisse savoir où on était avant
-        val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
-        sharedPreferences.edit() {
-            putString("last_activity", "PyramidActivity")
-        }
     }
 
     override fun onResume() {

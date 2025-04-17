@@ -46,7 +46,7 @@ class PyramidView @JvmOverloads constructor (context: Context, attributes: Attri
 
     init {
         println(lastRowObstacle)
-        everyObjects = EveryObjects()
+        everyObjects = EveryObjects.getInstance()
 
         // Création des obstacles
         for (i in 0 until obstaclePosX.size){
