@@ -1,5 +1,6 @@
 package com.example.myapplication.pyramid
 
+import com.example.myapplication.Singleton
 
 
 class EveryObjects private constructor() {
@@ -10,18 +11,9 @@ class EveryObjects private constructor() {
     var obstacleList = mutableListOf<Obstacle>().apply {
     }
 
-    companion object {
-        @Volatile
-        private var instance: EveryObjects? = null
-
-        fun getInstance(): EveryObjects {
-            return instance ?: synchronized(this) {
-                instance ?: EveryObjects().also { instance = it }
-            }
-        }
-
-        fun destroyInstance() {
-            instance = null
+    companion object : Singleton<EveryObjects>() {
+        override fun createInstance(): EveryObjects {
+            return EveryObjects()
         }
     }
 }

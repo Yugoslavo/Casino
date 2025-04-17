@@ -10,7 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class Player private constructor(private val context: Context){
+class Player private constructor(private val context: Context) {
 
     val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     val nameKey = stringPreferencesKey("name")
@@ -87,9 +87,7 @@ class Player private constructor(private val context: Context){
         this.money += money
     }
 
-    companion object {
-        @Volatile
-        private var instance: Player? = null
+    companion object : Singleton<Player>() {
 
         fun getInstance(context: Context): Player {
             return instance ?: synchronized(this) {
@@ -97,8 +95,9 @@ class Player private constructor(private val context: Context){
             }
         }
 
-        fun destroyInstance() {
-            instance = null
+        override fun createInstance(): Player {
+            //On a besoin du contexte pour créer l'instance de Player
+            throw IllegalStateException("Use getInstance(context) instead")
         }
     }
 }
