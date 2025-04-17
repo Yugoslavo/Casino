@@ -2,9 +2,6 @@ package com.example.myapplication.slotmachine
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -16,7 +13,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.BanqueActivity
 import com.example.myapplication.Player
 import com.example.myapplication.R
-import kotlin.apply
 import androidx.core.content.edit
 
 class SlotMachineActivity : AppCompatActivity() {
@@ -45,20 +41,15 @@ class SlotMachineActivity : AppCompatActivity() {
 
         val mise_view: EditText = findViewById<EditText>(R.id.mise_input)
         mise_view.setText(player.bet.toString())
-        mise_view.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {
-                if (mise_view.text.isEmpty()) {
-                    player.bet = 0F
-                }
-                else {
-                    val bet = mise_view.text.toString().toFloat()
-                    player.bet = bet
-                    mise_view.setText(player.bet.toString())
-                }
+
+        mise_view.setOnEditorActionListener { _, _, _ ->
+            val bet = mise_view.text.toString().toFloatOrNull()
+            if (bet != null) {
+                player.bet = bet
+                mise_view.setText(player.bet.toString())
             }
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-        })
+            false
+        }
 
         val manivelle_button: ImageButton = findViewById<ImageButton>(R.id.manivelle)
         var fruit1: ImageView = findViewById<ImageView>(R.id.fruit1)
