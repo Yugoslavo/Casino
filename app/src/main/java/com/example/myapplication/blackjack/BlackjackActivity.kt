@@ -13,7 +13,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.Player
 import com.example.myapplication.R
 import androidx.core.view.isVisible
-import org.w3c.dom.Text
 
 class BlackjackActivity : AppCompatActivity() {
     private val deck = mutableListOf<Card>()
@@ -56,7 +55,9 @@ class BlackjackActivity : AppCompatActivity() {
         val resourceId2 = resources.getIdentifier(cardName2, "drawable", packageName)
         imageView2.setImageResource(resourceId2)
 
-
+        val playerPoints = calculatePoints(playerHand)
+        val scoreTextView = findViewById<TextView>(R.id.Score)
+        scoreTextView.text = "Score = $playerPoints"
         // rank_of_suit le nom de tout les fichier avec les cartes
     }
 
