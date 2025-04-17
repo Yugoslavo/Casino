@@ -70,4 +70,12 @@ deactivate Player
 deactivate Bank
 deactivate PA
 
+== Retour au menu ==
+User -> PA: Appuie sur "Retour"
+activate PA
+PA -> MA: finish(), retour au menu
+activate MA
+deactivate PA
+deactivate MA
+
 @enduml

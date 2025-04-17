@@ -23,7 +23,7 @@
         android:id="@+id/manivelle"
         android:layout_width="139dp"
         android:layout_height="146dp"
-        android:layout_marginStart="256dp"
+        android:layout_marginStart="276dp"
         android:layout_marginTop="276dp"
         android:adjustViewBounds="true"
         android:background="@null"
@@ -38,7 +38,7 @@
         android:layout_width="193dp"
         android:layout_height="146dp"
         android:layout_marginStart="-5dp"
-        android:layout_marginTop="-9dp"
+        android:layout_marginTop="4dp"
         android:contentDescription="@null"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -47,9 +47,10 @@
 
     <EditText
         android:id="@+id/mise_input"
-        android:layout_width="193dp"
-        android:layout_height="146dp"
-        android:layout_marginStart="200dp"
+        android:layout_width="146dp"
+        android:layout_height="145dp"
+        android:layout_marginStart="212dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/banque"
         android:gravity="center"
         android:hint="@string/enter_bet_hint"
@@ -64,7 +65,7 @@
         android:layout_width="145dp"
         android:layout_height="55dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="53dp"
         android:background="@android:color/transparent"
         android:contentDescription="@null"
         android:text="@string/bouton_nom"
@@ -74,10 +75,10 @@
 
     <ImageView
         android:id="@+id/machine"
-        android:layout_width="330dp"
-        android:layout_height="356dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="260dp"
+        android:layout_width="361dp"
+        android:layout_height="338dp"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="264dp"
         android:contentDescription="@null"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -86,10 +87,10 @@
 
     <ImageView
         android:id="@+id/fruit1"
-        android:layout_width="71dp"
-        android:layout_height="101dp"
+        android:layout_width="70dp"
+        android:layout_height="97dp"
         android:layout_marginStart="68dp"
-        android:layout_marginTop="392dp"
+        android:layout_marginTop="388dp"
         android:contentDescription="@null"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +101,7 @@
         android:id="@+id/fruit2"
         android:layout_width="77dp"
         android:layout_height="106dp"
-        android:layout_marginStart="136dp"
+        android:layout_marginStart="148dp"
         android:layout_marginTop="384dp"
         android:contentDescription="@null"
 
@@ -112,7 +113,7 @@
         android:id="@+id/fruit3"
         android:layout_width="75dp"
         android:layout_height="100dp"
-        android:layout_marginStart="212dp"
+        android:layout_marginStart="216dp"
         android:layout_marginTop="388dp"
         android:contentDescription="@null"
 
@@ -124,12 +125,24 @@
         android:id="@+id/textView"
         android:layout_width="154dp"
         android:layout_height="29dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="52dp"
         android:fontFamily="@font/cinzel"
         android:text="Mise"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/argent"
         app:layout_constraintTop_toTopOf="@+id/mise_input" />
+
+        <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="57dp"
+        android:fontFamily="@font/cinzel"
+        android:text="Banque"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

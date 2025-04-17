@@ -36,6 +36,18 @@ else Perte
 end
 deactivate Slot
 
+== Interaction Banque ==
+Player -> Slot: Clique sur "Banque"
+activate Slot
+Slot -> Bank: startActivity(BankActivity)
+activate Bank
+Bank -> Player: Player.getInstance(applicationContext)
+activate Player
+Bank -> UI: Affiche le solde dans moneyTextView
+deactivate Player
+deactivate Bank
+deactivate Slot
+
 == Retour au menu ==
 Player -> Slot : Appuie sur "Retour"
 activate Slot
@@ -44,5 +56,5 @@ deactivate Slot
 activate Main
 deactivate Main
 
-@enduml
+
 @enduml
