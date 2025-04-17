@@ -50,11 +50,11 @@ class BlackjackActivity : AppCompatActivity() {
         val carte2 = playerHand[1]
 
         val imageView1: ImageView = findViewById(R.id.imageView17)
-        val cardName1 = "${carte1.rank.displayName()}_of_${carte1.suit.displayName()}"
+        val cardName1 = "${carte1.rank.displayName}_of_${carte1.suit.displayName}"
         val resourceId1 = resources.getIdentifier(cardName1, "drawable", packageName)
         imageView1.setImageResource(resourceId1)
         val imageView2: ImageView = findViewById(R.id.imageView16)
-        val cardName2 = "${carte2.rank.displayName()}_of_${carte2.suit.displayName()}"
+        val cardName2 = "${carte2.rank.displayName}_of_${carte2.suit.displayName}"
         val resourceId2 = resources.getIdentifier(cardName2, "drawable", packageName)
         imageView2.setImageResource(resourceId2)
 
@@ -87,7 +87,7 @@ class BlackjackActivity : AppCompatActivity() {
             for (imageView in imageViews){
                 if(imageView.visibility != View.VISIBLE){
                     imageView.visibility = View.VISIBLE
-                    val cardName = "${firstCard.rank.displayName()}_of_${firstCard.suit.displayName()}"
+                    val cardName = "${firstCard.rank.displayName}_of_${firstCard.suit.displayName}"
                     val resourceId1 = resources.getIdentifier(cardName, "drawable", packageName)
                     imageView.setImageResource(resourceId1)
 
@@ -161,7 +161,7 @@ class BlackjackActivity : AppCompatActivity() {
             for (imageView in imageViews) {
                 if (imageView.visibility == View.VISIBLE && cardsIterator.hasNext()) {
                     val card = cardsIterator.next()
-                    val cardName = "${card.rank.displayName()}_of_${card.suit.displayName()}"
+                    val cardName = "${card.rank.displayName}_of_${card.suit.displayName}"
                     val resourceId = resources.getIdentifier(cardName, "drawable", packageName)
                     imageView.setImageResource(resourceId)
                     cardsIterator.remove()
