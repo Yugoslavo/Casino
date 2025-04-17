@@ -70,7 +70,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="6dp" />
     <Button
-        android:id="@+id/myTextView"
+        android:id="@+id/Back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

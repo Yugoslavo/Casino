@@ -15,6 +15,7 @@ import com.example.myapplication.R
 import com.example.myapplication.blackjack.Suit
 import com.example.myapplication.blackjack.Rank
 import androidx.core.view.isVisible
+import org.w3c.dom.Text
 
 class BlackjackActivity : AppCompatActivity() {
     private val deck = mutableListOf<Card>()
@@ -72,7 +73,8 @@ class BlackjackActivity : AppCompatActivity() {
             deck.removeAt(0)
             playerHand.add(firstCard)
             val playerPoints = calculatePoints(playerHand)
-
+            val scoreTextView = findViewById<TextView>(R.id.Score)
+            scoreTextView.text = "Score = $playerPoints"
             // Making a list of image views
             val imageViews = listOf(
                 findViewById<ImageView>(R.id.imageView19),
@@ -175,16 +177,19 @@ class BlackjackActivity : AppCompatActivity() {
 
             val result = when {
                 playerPoints > 21 && aiPoints > 21 -> "Both busted!"
-                playerPoints > 21 -> "AI wins! You busted! loosing : ${bet}\$"
-                aiPoints > 21 -> "You win! AI busted won: ${2*bet}$!"
-                playerPoints > aiPoints -> "You win with $playerPoints vs $aiPoints! Winning : ${2*bet}$"
-                aiPoints > playerPoints -> "AI wins with $aiPoints vs $playerPoints! loosing : ${bet}$"
+                playerPoints > 21 -> "AI wins! You busted!      Lost : ${bet}\$"
+                aiPoints > 21 -> "You win! AI busted.       Won: ${2*bet}$!"
+                playerPoints > aiPoints -> "You win with $playerPoints vs $aiPoints!        Won : ${2*bet}$"
+                aiPoints > playerPoints -> "AI wins with $aiPoints vs $playerPoints!        Lost : ${bet}$"
                 else -> "It's a tie at $playerPoints!"
             }
 
             if((aiPoints > 21 && playerPoints < 22) || (playerPoints < 22 && playerPoints > aiPoints)){
                 player.money += 2*bet
               }
+            if(aiPoints == playerPoints){
+                player.money += bet
+            }
 
             val resultTextView = findViewById<TextView>(R.id.myTextView)
             resultTextView.text = result
