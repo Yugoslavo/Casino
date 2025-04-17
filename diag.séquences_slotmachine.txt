@@ -1,55 +1,65 @@
 @startuml
 title Diagramme de séquence – Machine à sous 🎰 avec mise et banque
 
-actor Player
+actor "Utilisateur" as User
 participant "MainActivity" as Main
 participant "SlotMachineActivity" as Slot
+participant "Player" as Player
 participant "BankActivity" as Bank
 
 == Lancement du jeu ==
-Player -> Main : Lance l'application
+User -> Main : Lance l'application
 activate Main
-Player -> Main : Sélectionne "Machine à sous"
+User -> Main : Sélectionne "Machine à sous"
 Main -> Slot : startActivity(Intent)
 deactivate Main
 activate Slot
 
-== Partie de machine à sous ==
-activate Slot
-Player -> Slot : Appuie sur manivelle
-Slot -> Bank : Vérifie solde et soustrait mise
+== Opérations au sein de la Banque ==
+User -> Slot:Clique sur "Banque"
+Slot -> Bank: startActivity(BanqueActivity)
 activate Bank
-Bank -> Slot : Confirmation de la mise
+Bank -> Player:Lit le solde actuel
+Player-->>Bank:Donne le solde actuel
+Bank -->> User:Affiche le solde actuel
 deactivate Bank
 
+
+== Partie de machine à sous ==
+User -> Slot : Clique sur "Mise"
+User -> Slot : Entre la mise
+Slot -> Player: Met à jour la mise
+
+activate Slot
+Player -->> User: Affiche la mise
+activate Slot
+User -> Slot : Appuie sur manivelle
+Slot -> Player: soustrait la mise
+activate Player
+Player --> Bank: Montant mis à jour
+deactivate Player
 Slot -> Slot : Génère les symboles aléatoires
 Slot -> Slot : Affiche les résultats
 
 alt Gain
-    Slot -> Bank : Créditer les gains
-    activate Bank
-    Bank -> Slot : Solde mis à jour
-    deactivate Bank
-    Slot -> Player : Affiche les gains
+    Slot -> Player : Créditer les gains
+    activate Player
+    Player --> Bank : Solde mis à jour
+    Player -->> User : Affiche les gains
+    deactivate Player
 else Perte
-    Slot -> Player : Affiche les pertes
+    Slot -> Player : Débiter les pertes
+    activate Player
+    Player --> Bank : Solde mis à jour
+    Player -->> User : Affiche les pertes
+    deactivate Player
 end
 deactivate Slot
 
-== Interaction Banque ==
-Player -> Slot: Clique sur "Banque"
-activate Slot
-Slot -> Bank: startActivity(BankActivity)
-activate Bank
-Bank -> Player: Player.getInstance(applicationContext)
-activate Player
-Bank -> UI: Affiche le solde dans moneyTextView
-deactivate Player
-deactivate Bank
-deactivate Slot
+
 
 == Retour au menu ==
-Player -> Slot : Appuie sur "Retour"
+User -> Slot : Appuie sur "Retour"
 activate Slot
 Slot -> Main : finish(), retour au menu
 deactivate Slot
