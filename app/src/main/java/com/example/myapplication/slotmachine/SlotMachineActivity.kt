@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.BanqueActivity
+import com.example.myapplication.MainActivity
 import com.example.myapplication.Player
 import com.example.myapplication.R
 
@@ -78,6 +79,13 @@ class SlotMachineActivity : AppCompatActivity() {
             fruit3.setImageResource(fruits[2].icon)
         }
         updateMoneyValue()
+        findViewById<Button>(R.id.return_button).setOnClickListener {
+            back()
+        }
+    }
+
+    fun back(){
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
 
