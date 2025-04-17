@@ -12,6 +12,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.Player
 import com.example.myapplication.R
+import com.example.myapplication.blackjack.Suit
+import com.example.myapplication.blackjack.Rank
 
 class BlackjackActivity : AppCompatActivity() {
     private val deck = mutableListOf<Card>()
@@ -30,34 +32,13 @@ class BlackjackActivity : AppCompatActivity() {
             insets
         }
 
-//        deckButton.visibility = View.GONE
 
-        val rankToValueMap = mapOf(
-
-            "two" to 2,
-            "three" to 3,
-            "four" to 4,
-            "five" to 5,
-            "six" to 6,
-            "seven" to 7,
-            "eight" to 8,
-            "nine" to 9,
-            "ten" to 10,
-
-            )
-        val suits = listOf("spades", "hearts", "diamonds", "clubs")
-        val ranks = listOf("ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king")
-        for (suit in suits) {
-            for (rank in ranks) {
-                val value = when (rank) {
-                    "ace" -> 11
-                    "king", "queen", "jack" -> 10
-                    else -> rankToValueMap[rank]?: 0
-
-                }
-                deck.add(Card(suit, rank, value))
+        for (suit in Suit.values()) {
+            for (rank in Rank.values()) {
+                deck.add(Card(suit, rank))
             }
         }
+
         deck.shuffle()
         repeat(2){
             val carte = deck.random().also { deck.remove(it) }
@@ -67,12 +48,13 @@ class BlackjackActivity : AppCompatActivity() {
         //montrer les cartes du joueur
         val carte1 = playerHand[0]
         val carte2 = playerHand[1]
+
         val imageView1: ImageView = findViewById(R.id.imageView17)
-        val cardName1 = "${carte1.rank.lowercase()}_of_${carte1.suit.lowercase()}"
+        val cardName1 = "${carte1.rank.displayName()}_of_${carte1.suit.displayName()}"
         val resourceId1 = resources.getIdentifier(cardName1, "drawable", packageName)
         imageView1.setImageResource(resourceId1)
         val imageView2: ImageView = findViewById(R.id.imageView16)
-        val cardName2 = "${carte2.rank.lowercase()}_of_${carte2.suit.lowercase()}"
+        val cardName2 = "${carte2.rank.displayName()}_of_${carte2.suit.displayName()}"
         val resourceId2 = resources.getIdentifier(cardName2, "drawable", packageName)
         imageView2.setImageResource(resourceId2)
 
@@ -82,7 +64,7 @@ class BlackjackActivity : AppCompatActivity() {
 
 
     // Data Class for cards
-    data class Card (val suit: String, val rank : String, val value : Int)
+    data class Card (val suit: Suit, val rank : Rank)
 
     //Put the card nbr 1 into your hand
     fun CardReveal(view: View) {
@@ -90,6 +72,7 @@ class BlackjackActivity : AppCompatActivity() {
             val firstCard = deck[0]
             deck.removeAt(0)
             playerHand.add(firstCard)
+            val playerPoints = calculatePoints(playerHand)
 
             // Making a list of image views
             val imageViews = listOf(
@@ -99,18 +82,26 @@ class BlackjackActivity : AppCompatActivity() {
                 findViewById<ImageView>(R.id.imageView21),
                 findViewById<ImageView>(R.id.imageView22),
                 findViewById<ImageView>(R.id.imageView23)
+
             )
             for (imageView in imageViews){
                 if(imageView.visibility != View.VISIBLE){
                     imageView.visibility = View.VISIBLE
-                    val cardName = "${firstCard.rank.lowercase()}_of_${firstCard.suit.lowercase()}"
+                    val cardName = "${firstCard.rank.displayName()}_of_${firstCard.suit.displayName()}"
                     val resourceId1 = resources.getIdentifier(cardName, "drawable", packageName)
                     imageView.setImageResource(resourceId1)
 
                     break //Sinon ça va tout changer
                 }
             }
-            aiPlayTurn()
+            if(playerPoints > 21){
+                playerHasStopped = true
+                aiHasStopped = true
+                checkIfGameShouldEnd()
+            }
+            else{
+                aiPlayTurn()
+            }
 
         }
     }
@@ -130,15 +121,30 @@ class BlackjackActivity : AppCompatActivity() {
                 findViewById<ImageView>(R.id.imageView28),
                 findViewById<ImageView>(R.id.imageView11)
             )
-            imageViews.reversed().first { imageView -> imageView.visibility != View.VISIBLE }.visibility = View.VISIBLE
-            return
+            for(imageView in imageViews){
+                if(imageView.visibility != View.VISIBLE){
+                    imageView.visibility = View.VISIBLE
+
+                    break //Sinon ça crash
+                }
+            }
+            if(calculatePoints(aiHand) > 21){
+                aiHasStopped = true
+                playerHasStopped = true
+                checkIfGameShouldEnd()            }
+        }
+        else{
+            aiHasStopped = true
+            checkIfGameShouldEnd()
         }
 
-        aiHasStopped = true
-        checkIfGameShouldEnd()
     }
     private fun checkIfGameShouldEnd() {
         if (playerHasStopped && aiHasStopped) {
+
+            findViewById<Button>(R.id.deckButton).isEnabled = false
+            findViewById<Button>(R.id.playerStop).isEnabled = false
+
             val mainIA = aiHand.toMutableList()
             val imageViews = listOf(
                 findViewById<ImageView>(R.id.imageView27),
@@ -155,7 +161,7 @@ class BlackjackActivity : AppCompatActivity() {
             for (imageView in imageViews) {
                 if (imageView.visibility == View.VISIBLE && cardsIterator.hasNext()) {
                     val card = cardsIterator.next()
-                    val cardName = "${card.rank.lowercase()}_of_${card.suit.lowercase()}"
+                    val cardName = "${card.rank.displayName()}_of_${card.suit.displayName()}"
                     val resourceId = resources.getIdentifier(cardName, "drawable", packageName)
                     imageView.setImageResource(resourceId)
                     cardsIterator.remove()
@@ -174,15 +180,11 @@ class BlackjackActivity : AppCompatActivity() {
                 else -> "It's a tie at $playerPoints!"
             }
 
-
-            val player = Player.getInstance(this.applicationContext)
-            val bet = player.bet
-            if(aiPoints > 21 && playerPoints < 22 || playerPoints > aiPoints){
+            val player = Player.getInstance(this)
+            val bet = Initblackjack.GameState.betValue // It takes the bet from the initBlackjack
+            if((aiPoints > 21 && playerPoints < 22) || (playerPoints < 22 && playerPoints > aiPoints)){
                 player.money += 2*bet
-            }
-            if(playerPoints > 21 && aiPoints < 22 || aiPoints > playerPoints ){
-                player.money -= bet
-            }
+              }
 
             val resultTextView = findViewById<TextView>(R.id.myTextView)
             resultTextView.text = result
@@ -200,8 +202,8 @@ class BlackjackActivity : AppCompatActivity() {
         var total = 0
         var aceCount = 0
         for (card in hand){
-            total += card.value
-            if(card.rank == "ace") aceCount++
+            total += card.rank.Value
+            if(card.rank.displayName == "ace") aceCount++
         }
         while(total > 21 && aceCount > 0){
             total -= 10
@@ -220,6 +222,7 @@ class BlackjackActivity : AppCompatActivity() {
         while(aiHasStopped == false){
             aiPlayTurn()
         }
+
 
     }
 
