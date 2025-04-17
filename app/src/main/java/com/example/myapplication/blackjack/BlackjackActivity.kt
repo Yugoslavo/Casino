@@ -171,17 +171,18 @@ class BlackjackActivity : AppCompatActivity() {
             val playerPoints = calculatePoints(playerHand)
             val aiPoints = calculatePoints(aiHand)
 
+            val player = Player.getInstance(this)
+            val bet = Initblackjack.GameState.betValue // It takes the bet from the initBlackjack, it is called Mise
+
             val result = when {
                 playerPoints > 21 && aiPoints > 21 -> "Both busted!"
-                playerPoints > 21 -> "AI wins! You busted!"
-                aiPoints > 21 -> "You win! AI busted!"
-                playerPoints > aiPoints -> "You win with $playerPoints vs $aiPoints!"
-                aiPoints > playerPoints -> "AI wins with $aiPoints vs $playerPoints!"
+                playerPoints > 21 -> "AI wins! You busted! loosing : ${bet}\$"
+                aiPoints > 21 -> "You win! AI busted won: ${2*bet}$!"
+                playerPoints > aiPoints -> "You win with $playerPoints vs $aiPoints! Winning : ${2*bet}$"
+                aiPoints > playerPoints -> "AI wins with $aiPoints vs $playerPoints! loosing : ${bet}$"
                 else -> "It's a tie at $playerPoints!"
             }
 
-            val player = Player.getInstance(this)
-            val bet = Initblackjack.GameState.betValue // It takes the bet from the initBlackjack
             if((aiPoints > 21 && playerPoints < 22) || (playerPoints < 22 && playerPoints > aiPoints)){
                 player.money += 2*bet
               }

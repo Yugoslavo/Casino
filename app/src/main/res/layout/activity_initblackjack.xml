@@ -18,6 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:scaleType="centerCrop" />
 
+
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="150dp"
@@ -68,14 +69,25 @@
         android:background="#CC050505"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="6dp" />
-
+    <Button
+        android:id="@+id/myTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Back"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="Back"
+        />
 
     <Button
         android:id="@+id/argent"
         android:layout_width="145dp"
         android:layout_height="55dp"
-        android:layout_marginTop="348dp"
-        android:layout_marginEnd="212dp"
+        android:layout_marginTop="288dp"
+        android:layout_marginEnd="224dp"
         android:backgroundTint="#8A2222"
         android:contentDescription="@null"
         android:onClick="openBank"

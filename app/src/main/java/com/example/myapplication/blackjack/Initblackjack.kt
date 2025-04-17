@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.BanqueActivity
+import com.example.myapplication.MainActivity
 import com.example.myapplication.Player
 import com.example.myapplication.R
 
@@ -72,6 +73,11 @@ class Initblackjack : AppCompatActivity() {
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    fun Back(view: View) {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
 
