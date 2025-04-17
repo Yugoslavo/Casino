@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.edit
 import com.example.myapplication.BanqueActivity
 import com.example.myapplication.MainActivity
 import com.example.myapplication.Player
