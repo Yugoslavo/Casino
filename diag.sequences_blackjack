@@ -25,18 +25,21 @@ Player-->>Bank:Donne le solde actuel
 Bank -->> User:Affiche le solde actuel
 deactivate Bank
 
+== Démarrage du Jeu ==
 User->Init:Clique sur "Mise"
 User->Init:Entre la mise
-Init->Player:Met à jour la mise
-Player->Player:Soustrait la mise
-== Démarrage du Jeu ==
-User->Bank
-Bank -> Bank 
-Bank-->>User 
-User -> Bank 
-User -> Bank 
- 
-Player<-Bank
+alt Mise > montant en banque ou <0
+    Player -> Player : bloque l'exécution 
+    Player-->> User:N'affiche aucune mise
+    User ->Game: Entre une nouvelle  mise
+
+else Mise = 0
+    Game ->Game:Désactive le bouton "Start" (bouton non cliquable)
+    User ->Game: Entre une nouvelle  mise
+    
+else Mise suffisante et différente de 0
+Init->Player:Soustrait la mise
+Player-->>Bank:Montant mis à jour
 User -> Init: Clique sur "Start"
 deactivate Init
 Init -> Game:startActivity(BlackJackActivity)
@@ -48,12 +51,13 @@ Game->Game:2x playerHand.add(Card)
 Game-->>User:Ajoute 2 cartes au joueur
 Game->Game:2x aiHand.add(Card)
 Game-->>User : Joueur voit ses 2 cartes
+end
 
 == Tour du Joueur et du Robot ==
 
 User->Game:Clique sur "Piocher"
 Game->Game:playerHand.add(Card)
-alt if aiHand < 17
+alt  aiHand < 17
     Game -> Game:aiHand.add(Card)
 
 else
@@ -65,8 +69,8 @@ end
 User -> Game:Clique sur "Stop"
 Game -> Game: playerHasStopped = true
 Game -> Game: Désactive les boutons (deck et stop)
-loop While(aiHasStopped == false)
-    alt if aiHand < 17
+loop (aiHasStopped == false)
+ aiHand < 17
     Game -> Game:aiHand.add(Card)
     
 else
@@ -80,7 +84,36 @@ end
 Game -> Game:checkIfGameShouldEnd
 Game -> Game: calculatePoints(playerHand) & calculatePoints(aiHand)
 
-Game -> Player:player.money
+User<<--Game:Affiche les cartes du robot
+
+
+alt playerPoints > 21 and aiPoints > 21
+User<<--Game:Affiche "Both busted!"
+    Game->Player:player.money -= bet
+Player-->>Bank:Montant mis à jour
+else playerPoints > 21
+User<<--Game:Affiche "AI wins! You busted!"
+    Game->Player:player.money -= bet
+    Player-->>Bank:Montant mis à jour
+else aiPoints > 21
+User<<--Game:Affiche "You win! AI busted!"
+    Game->Player:player.money += 2 * bet
+    Player-->>Bank:Montant mis à jour
+else playerPoints > aiPoints
+User<<--Game:Affiche "You win with (playerPoints) VS (aiPoints)"
+    Game->Player:player.money += 2 * bet
+    Player-->>Bank:Montant mis à jour
+else aiPoints > playerPoints
+User<<--Game:Affiche "AI wins with (aiPoints) VS (playerPoints)"
+    Game->Player:player.money -= bet
+    Player-->>Bank:Montant mis à jour
+else aiPoints = playerPoints
+User<<--Game:Affiche " It's a tie at (playerPoints)"
+ 
+end
+
+
+Game -> Player
 
 == Retour à l'accueil ==
 User -> Game:Clique sur "Retour Menu"
