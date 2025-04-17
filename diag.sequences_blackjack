@@ -51,12 +51,16 @@ Game->Game:2x playerHand.add(Card)
 Game-->>User:Ajoute 2 cartes au joueur
 Game->Game:2x aiHand.add(Card)
 Game-->>User : Joueur voit ses 2 cartes
+Game->Game:calculatePoints(playerHand)
+User<<--Game:Affiche le nombre de points  du joueur
 end
 
 == Tour du Joueur et du Robot ==
 
 User->Game:Clique sur "Piocher"
 Game->Game:playerHand.add(Card)
+Game->Game:calculatePoints(playerHand)
+User<<--Game:Affiche le nombre de points  du joueur
 alt playerHand >21
 Game->Game:playerHasStopped = true
 Game->Game:aiHasStopped = True
@@ -118,6 +122,9 @@ User<<--Game:Affiche "AI wins with (aiPoints) VS (playerPoints)"
 else aiPoints = playerPoints
 User<<--Game:Affiche " It's a tie at (playerPoints)"
  
+Game->Player:player.money += bet
+Player-->>Bank:Montant mis à jour
+else playerPoints > aiPoints
 end
 
 
