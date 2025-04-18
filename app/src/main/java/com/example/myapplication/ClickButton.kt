@@ -2,8 +2,10 @@ package com.example.myapplication
 
 import android.content.Context
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 
 class ClickButton : MoneyEarningStrategy {
     override fun earnMoney(context: Context){
@@ -14,7 +16,9 @@ class ClickButton : MoneyEarningStrategy {
         button.text = n.toString()
         val alert = AlertDialog.Builder(context, R.style.Theme_MyApplication)
             .setTitle("Click $n times")
-            .setView(button).show()
+            .setView(button).setOnDismissListener {
+                (context as BanqueActivity).updateMoney()
+            }.show()
         button.setOnClickListener {
             var k = button.text.toString().toInt()
             if (k == 0){

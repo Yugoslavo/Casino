@@ -36,9 +36,18 @@ class BanqueActivity : AppCompatActivity() {
             else -> WatchAd() // should not happen
         }
         strategy.earnMoney(this)
-
-
     }
+
+    override fun onResume() {
+        super.onResume()
+        updateMoney()
+    }
+
+    fun updateMoney() {
+        val argentTextView: TextView = findViewById(R.id.argentTextView)
+        argentTextView.text  = Player.getInstance(this.applicationContext).money.toString()
+    }
+
 
     fun exit(view: View) {
         onBackPressed()
