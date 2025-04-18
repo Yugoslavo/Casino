@@ -87,7 +87,9 @@ class Player private constructor(private val context: Context) {
         this.money += money
     }
 
-    companion object : Singleton<Player>() {
+    companion object {
+        @Volatile
+        private var instance : Player? = null
 
         fun getInstance(context: Context): Player {
             return instance ?: synchronized(this) {
@@ -95,9 +97,8 @@ class Player private constructor(private val context: Context) {
             }
         }
 
-        override fun createInstance(): Player {
-            //On a besoin du contexte pour créer l'instance de Player
-            throw IllegalStateException("Use getInstance(context) instead")
+        fun destroyInstance() {
+            instance = null
         }
     }
 }

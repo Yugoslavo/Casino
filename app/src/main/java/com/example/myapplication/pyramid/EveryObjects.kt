@@ -1,6 +1,7 @@
 package com.example.myapplication.pyramid
 
-import com.example.myapplication.Singleton
+import android.content.Context
+import com.example.myapplication.Player
 
 
 class EveryObjects private constructor() {
@@ -11,9 +12,18 @@ class EveryObjects private constructor() {
     internal val obstacleList = mutableListOf<Obstacle>().apply {
     }
 
-    companion object : Singleton<EveryObjects>() {
-        override fun createInstance(): EveryObjects {
-            return EveryObjects()
+    companion object {
+        @Volatile
+        private var instance : EveryObjects? = null
+
+        fun getInstance(): EveryObjects {
+            return instance ?: synchronized(this) {
+                instance ?: EveryObjects().also { instance = it }
+            }
+        }
+
+        fun destroyInstance() {
+            instance = null
         }
     }
 }
