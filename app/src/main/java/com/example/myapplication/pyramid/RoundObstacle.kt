@@ -3,8 +3,6 @@ package com.example.myapplication.pyramid
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import kotlin.math.abs
-import kotlin.math.sign
 import kotlin.math.sqrt
 
 class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override var y: Float = 400f): Obstacle() {

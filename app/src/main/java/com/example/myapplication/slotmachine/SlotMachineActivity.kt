@@ -18,9 +18,11 @@ import com.example.myapplication.R
 class SlotMachineActivity : AppCompatActivity() {
     lateinit var player: Player
     lateinit var machine: SlotMachine
+    lateinit var argent_button: Button
+    lateinit var mise_view: EditText
 
     /*
-    après quelques essais, la chance à 0.3 possède une espérance légèrement positive
+    après quelques tests on a remarqué que la chance à 0.3 possède une espérance légèrement positive
     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +36,17 @@ class SlotMachineActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        // mise en place du bouton pour ouvrir la banque
         val openBankButton: Button = findViewById<Button>(R.id.argent)
         openBankButton.setOnClickListener {
             openBank()
         }
 
+        // affichage de la mise du joueur
         val mise_view: EditText = findViewById<EditText>(R.id.mise_input)
         mise_view.setText(player.bet.toString())
 
+        // Sauvegarde de la mise du joueur lorsque l'utilisateur la modifie
         mise_view.setOnEditorActionListener { _, _, _ ->
             val bet = mise_view.text.toString().toFloatOrNull()
             if (bet != null) {
@@ -51,32 +56,15 @@ class SlotMachineActivity : AppCompatActivity() {
             false
         }
 
+
         val manivelle_button: ImageButton = findViewById<ImageButton>(R.id.manivelle)
         var fruit1: ImageView = findViewById<ImageView>(R.id.fruit1)
         var fruit2: ImageView = findViewById<ImageView>(R.id.fruit2)
         var fruit3: ImageView = findViewById<ImageView>(R.id.fruit3)
 
+        // Fonctionnalité de la manivelle de la machine à sous
         manivelle_button.setOnClickListener {
-            val argent_button: Button = openBankButton
-            var argent = argent_button.text.toString().toFloat()
-            var mise_text = mise_view.text.toString()
-            var mise = when(mise_text){
-                "" -> 0F
-                else -> mise_text.toFloat()
-            }
-            if (mise == 0f) {
-                return@setOnClickListener
-            }
-            var result = machine.play(mise)
-            argent -= mise
-            argent += result
-            player.addMoney(result - mise)
-            argent_button.text = argent.toString()
-            mise_view.setText(player.bet.toString())
-            var fruits: Array<Fruit> = machine.fruits
-            fruit1.setImageResource(fruits[0].icon)
-            fruit2.setImageResource(fruits[1].icon)
-            fruit3.setImageResource(fruits[2].icon)
+            play()
         }
         updateMoneyValue()
         findViewById<Button>(R.id.return_button).setOnClickListener {
@@ -84,7 +72,36 @@ class SlotMachineActivity : AppCompatActivity() {
         }
     }
 
-    fun back(){
+    fun play(){
+        var argent = argent_button.text.toString().toFloat()
+        var mise_text = mise_view.text.toString()
+        var mise = when(mise_text){
+            "" -> 0F
+            else -> mise_text.toFloat()
+        }
+        if (mise == 0f) {
+            return
+        }
+        // lancer la machine à sous
+        val result = machine.play(mise)
+        // affichage du résultat
+        argent -= mise
+        argent += result
+        player.addMoney(result - mise)
+        argent_button.text = argent.toString()
+        mise_view.setText(player.bet.toString())
+        // affichage des fruits
+        val fruits: Array<Fruit> = machine.fruits
+        val fruit1: ImageView = findViewById<ImageView>(R.id.fruit1)
+        val fruit2: ImageView = findViewById<ImageView>(R.id.fruit2)
+        val fruit3: ImageView = findViewById<ImageView>(R.id.fruit3)
+        fruit1.setImageResource(fruits[0].icon)
+        fruit2.setImageResource(fruits[1].icon)
+        fruit3.setImageResource(fruits[2].icon)
+    }
+
+
+    fun back(){ // Retour à l'écran principal
         startActivity(Intent(this, MainActivity::class.java))
     }
 
@@ -99,19 +116,15 @@ class SlotMachineActivity : AppCompatActivity() {
         updateMoneyValue()
     }
 
-    fun openBank() {
-        //val mise: Button = findViewById(R.id.mise)
+    fun openBank() {// Ouverture de la banque
         val intent = Intent(this, BanqueActivity::class.java)
         startActivity(intent)
-        //val newValue = nouvelleMise()
-        //mise.text = "$newValue"
     }
 
     private fun updateMoneyValue() {
-        val bank: Button = findViewById(R.id.argent)
         // sauvegarde bet
         val playerMoney = player.money // Default to 0
-        bank.text = playerMoney.toString()  // Update the button
+        argent_button.text = playerMoney.toString()  // Update the button
     }
 
 }

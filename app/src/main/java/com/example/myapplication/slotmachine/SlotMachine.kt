@@ -5,6 +5,7 @@ import kotlin.math.max
 import kotlin.random.Random
 
 class SlotMachine (var luck: Float) {
+    // Cette classe représente une machine à sous et gère la logique de jeu
     var fruits: Array<Fruit> = arrayOf()
         get() = field
         set(value){
@@ -13,9 +14,10 @@ class SlotMachine (var luck: Float) {
 
 
     fun play(mise: Float): Float{
-        var normalized_luck = atan(luck.toDouble()) /3.15 +0.5 // Luck est un nombre entre - inf et + inf qui représente à quel points le joueur doit être chanceux
+        // Luck est un nombre entre - inf et + inf qui représente à quel points le joueur doit être chanceux
+        var normalized_luck = atan(luck.toDouble()) /3.15 +0.5 // on normalise la chance entre 0 et 1 (0 = pas de chance, 1 = chance max)
         this.fruits = arrayOf()
-        //Distribution normal: 1 - luck, bon: luck/3, mauvais: 2*luck/3
+        //Distribution normal: luck/3, bon: 2*luck/3, mauvais: 1 - luck
         (1..3).forEach { i ->
             var result = Random.Default.nextFloat()
             var fruit: Fruit = when {
@@ -34,14 +36,15 @@ class SlotMachine (var luck: Float) {
             return this.play(mise)
         }
 
-        var found_id: Array<Int> = arrayOf()
+        //calcule le gain en fonction des fruits obtenus et de la mise
+        var foundIds: Array<Int> = arrayOf()
         var multiplier = 0F
         for (fruit in fruits) {
-            if (fruit.id in found_id){
+            if (fruit.id in foundIds){
                 continue
             }
             var count = fruits.count { x -> x.id == fruit.id }
-            found_id += fruit.id
+            foundIds += fruit.id
             multiplier += fruit.getValue(count)
         }
         multiplier = max(0F, multiplier)

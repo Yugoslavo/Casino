@@ -32,7 +32,18 @@ class Initblackjack : AppCompatActivity() {
         val currentMoney = player.money
         val moneyButton = findViewById<Button>(R.id.argent)
         moneyButton.text = "${currentMoney} €"
+        val changeMise = findViewById<EditText>(R.id.Mise)
+        changeMise.setText(player.bet.toString())
 
+        // Ajout du fonctionnement de l'input pour la mise
+        changeMise.setOnEditorActionListener { _, _, _ ->
+            val bet = changeMise.text.toString().toFloatOrNull()
+            if (bet != null) {
+                player.bet = bet
+                changeMise.setText(player.bet.toString())
+            }
+            false
+        }
     }
 
 
@@ -44,32 +55,6 @@ class Initblackjack : AppCompatActivity() {
     fun openBank(view: View) {
         val intent = Intent(this, BanqueActivity::class.java)
         startActivity(intent)
-    }
-
-    fun changeMise(view: View) {
-        val changeMise = findViewById<Button>(R.id.Mise)
-        val input = EditText(this)
-        input.hint = "Mise"
-        input.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-
-        AlertDialog.Builder(this)
-            .setTitle("Enter your bet")
-            .setView(input)
-            .setPositiveButton("OK") { _, _ ->
-                val newBet = input.text.toString()
-                val value = newBet.toFloatOrNull()
-
-                if (value != null) {
-                    player.bet = value//Mettre dans l'object de la variable classe
-                    changeMise.text = value.toString()
-                    player.money -= value
-
-                } else {
-                    Toast.makeText(this, "Please enter a valid number", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
     }
 
     fun Back(view: View) {

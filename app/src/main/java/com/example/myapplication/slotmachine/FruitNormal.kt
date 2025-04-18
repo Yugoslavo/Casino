@@ -9,6 +9,7 @@ class FruitNormal() : Fruit {
         set(value) {
             if (1 <= this.id && this.id <= 4) {
                 field = value
+                // on choisit l'icône en fonction de l'id
                 this.icon = when (this.id){
                     1 -> R.drawable.fraise
                     2 -> R.drawable.orange
@@ -30,7 +31,7 @@ class FruitNormal() : Fruit {
         }
 
     init {
-        id = Random.nextInt(1,5)
+        id = Random.nextInt(1,5) // on choisit un fruit normal au hasard
     }
 
     override fun getValue(count: Int) : Float {

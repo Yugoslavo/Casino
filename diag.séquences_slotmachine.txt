@@ -19,7 +19,7 @@ activate Slot
 User -> Slot:Clique sur "Banque"
 Slot -> Bank: startActivity(BanqueActivity)
 activate Bank
-Bank -> Player:Lit le solde actuel
+Bank -> Player:Lit/change le solde actuel
 Player-->>Bank:Donne le solde actuel
 Bank -->> User:Affiche le solde actuel
 deactivate Bank
@@ -30,23 +30,21 @@ User -> Slot : Clique sur "Mise"
 User -> Slot : Entre la mise
 Slot -> Player: Met à jour la mise
 
-activate Slot
 Player -->> User: Affiche la mise
 alt Mise > montant en banque ou <0
-    Player -> Player : bloque l'exécution 
+    Player -> Player : bloque l'exécution
     Player-->> User:N'affiche aucune mise
     User ->Slot: Entre une nouvelle  mise
 
 else Mise = 0
     Slot ->Slot: Désactive le bouton "Play" (bouton non cliquable)
     User ->Slot: Entre une nouvelle  mise
-    
+
 else Mise suffisante et différente de 0
-activate Slot
 User -> Slot : Appuie sur manivelle
 Slot -> Player: soustrait la mise
 activate Player
-Player --> Bank: Montant mis à jour
+Player -->  User: Montant mis à jour
 deactivate Player
 Slot -> Slot : Génère les symboles aléatoires
 Slot -> Slot : Affiche les résultats
@@ -56,27 +54,21 @@ end
 alt Gain
     Slot -> Player : Créditer les gains
     activate Player
-    Player --> Bank : Solde mis à jour
     Player -->> User : Affiche les gains
     deactivate Player
 else Perte
     Slot -> Player : Débiter les pertes
     activate Player
-    Player --> Bank : Solde mis à jour
     Player -->> User : Affiche les pertes
     deactivate Player
 end
-deactivate Slot
 
 
 
 == Retour au menu ==
 User -> Slot : Appuie sur "Retour"
-activate Slot
 Slot -> Main : finish(), retour au menu
 deactivate Slot
 activate Main
 deactivate Main
-
-
 @enduml

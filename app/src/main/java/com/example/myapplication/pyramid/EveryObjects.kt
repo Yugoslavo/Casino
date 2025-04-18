@@ -1,8 +1,5 @@
 package com.example.myapplication.pyramid
 
-import android.content.Context
-import com.example.myapplication.Player
-
 
 class EveryObjects private constructor() {
     // Listes des objets utilisés dans le jeu
@@ -12,6 +9,7 @@ class EveryObjects private constructor() {
     internal val obstacleList = mutableListOf<Obstacle>().apply {
     }
 
+    // méthodes statiques pour implémenter le pattern Singleton
     companion object {
         @Volatile
         private var instance : EveryObjects? = null

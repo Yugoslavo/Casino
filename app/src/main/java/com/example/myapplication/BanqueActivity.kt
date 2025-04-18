@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 
 class BanqueActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        //Initialisation de l'activité
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_banque)
@@ -19,11 +20,13 @@ class BanqueActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        //Affichage de l'argent du joueur
         val player = Player.getInstance(context = this.applicationContext)
         val playerMoney = player.money
-        println("Player money: $playerMoney")
         val argentTextView: TextView = findViewById(R.id.argentTextView)
-        argentTextView.text  = playerMoney.toString()  // Update the button text
+        argentTextView.text  = playerMoney.toString()
+
+        //Fonctionnalité des boutons pour gagner de l'argent
         findViewById<Button>(R.id.Clicker).setOnClickListener {
             earnMoney(2)
         }
@@ -33,6 +36,7 @@ class BanqueActivity : AppCompatActivity() {
     }
 
     fun earnMoney(id: Int){
+        // Fonction appelée lorsque le joueur clique sur un bouton pour gagner de l'argent
         val strategy: MoneyEarningStrategy = when (id) {
             1 -> WatchAd()
             2 -> ClickButton()
@@ -47,12 +51,14 @@ class BanqueActivity : AppCompatActivity() {
     }
 
     fun updateMoney() {
+        //met à jour l'affichage de l'argent du joueur
         val argentTextView: TextView = findViewById(R.id.argentTextView)
         argentTextView.text  = Player.getInstance(this.applicationContext).money.toString()
     }
 
 
     fun exit(view: View) {
+        // Fonction appelée lorsque le joueur clique sur le bouton "Exit"
         onBackPressed()
     }
 }

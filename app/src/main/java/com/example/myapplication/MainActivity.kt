@@ -23,17 +23,18 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        // création des boutons pour accéder aux différents jeux
         var slotMachineButton = findViewById<Button>(R.id.button)
         slotMachineButton.setOnClickListener{
             startActivity(Intent(this, SlotMachineActivity::class.java))
         }
-        var jeux2 = findViewById<Button>(R.id.button2)
-        jeux2.setOnClickListener{
+        var blackJackButton = findViewById<Button>(R.id.button2)
+        blackJackButton.setOnClickListener{
             startActivity(Intent(this, Initblackjack::class.java))
         }
 
-        var jeux3 = findViewById<Button>(R.id.button3)
-        jeux3.setOnClickListener{
+        var pyramideButton = findViewById<Button>(R.id.button3)
+        pyramideButton.setOnClickListener{
             startActivity(Intent(this, PyramidActivity::class.java))
         }
     }

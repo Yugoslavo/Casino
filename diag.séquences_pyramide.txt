@@ -34,7 +34,7 @@ note right of PA: Les obstacles sont créés et ajoutés \nà la liste interne (
 User -> PA:Clique sur "Banque"
 PA -> Bank: startActivity(BanqueActivity)
 activate Bank
-Bank -> Player:Lit le solde actuel
+Bank -> Player:Lit/change le solde actuel
 Player-->>Bank:Donne le solde actuel
 Bank -->> User:Affiche le solde actuel
 deactivate Bank
@@ -50,14 +50,14 @@ PA -> Player: Met à jour la mise
 Player -->> User: Affiche la mise
 
 alt Mise > montant en banque ou <0
-    Player -> Player : bloque l'exécution 
+    Player -> Player : bloque l'exécution
     Player-->> User:N'affiche aucune mise
     User -> PA: Entre une nouvelle  mise
 
 else Mise = 0
     PA -> PA: Désactive le bouton "Play" (bouton non cliquable)
     User -> PA: Entre une nouvelle  mise
-    
+
 else Mise suffisante et différente de 0
     User -> PA: Clique sur "Play"
     PA -> PV: addBall(bet)
@@ -80,7 +80,6 @@ alt Balle en bas de l'écran
     PV -> PA: ballHit(x, ball.bet)
     PA -> Player: addMoney(gain)
     activate Player
-    Player --> PA: Montant mis à jour
     deactivate Player
     PV -> Ball: Remove ball from ballList
     deactivate Ball
@@ -96,5 +95,4 @@ deactivate Obstacle
 deactivate PA
 deactivate PV
 deactivate MA
-
 @enduml

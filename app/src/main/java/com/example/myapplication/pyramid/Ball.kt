@@ -3,8 +3,6 @@ package com.example.myapplication.pyramid
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import com.example.myapplication.Player
-import kotlin.math.sqrt
 
 class Ball (var bet:Float, override var x: Float = Constants.screenWidth / 2f, override var y: Float = Constants.screenHeight/2f - 100): Figure, Observer {
     var isMoving = false

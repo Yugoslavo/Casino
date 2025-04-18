@@ -113,7 +113,6 @@ class BlackjackActivity : AppCompatActivity() {
             aiHand.add(card)
 
 // @drawable/card_back
-
             val imageViews = listOf(
                 findViewById<ImageView>(R.id.imageView27),
                 findViewById<ImageView>(R.id.imageView24),
