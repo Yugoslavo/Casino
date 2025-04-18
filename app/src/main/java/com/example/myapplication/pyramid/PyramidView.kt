@@ -120,7 +120,7 @@ class PyramidView @JvmOverloads constructor (context: Context, attributes: Attri
         }
     }
 
-    fun result(posx: Float): Float{
+    private fun result(posx: Float): Float{
         for (i  in 0 until lastRowObstacle.size - 1){
             if (posx < Constants.screenWidth/2 + lastRowObstacle[i]){
                 return multipliers[i]

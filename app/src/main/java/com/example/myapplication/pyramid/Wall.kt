@@ -16,11 +16,8 @@ class Wall(override var x: Float = Constants.screenWidth.toFloat(), override var
         canvas.drawRect(x - this.width/2, y - this.height / 2, x + this.width/2, y + this.height/2, paint)
     }
 
-    override fun callObservers() {
-        // Appelle les observateurs pour mettre à jour la vitesse de la balle
-        // On crée donc une fonction qui va à partir de la position de la balle et de sa vitesse
-        // déterminer la nouvelle vitesse de la balle après collision
-        var updateSpeed = {
+    override fun createUpdateFunction(): (Float, Float) -> (Float, Float) -> Array<Float> {
+        return {
                 ballX: Float, ballY:Float ->
             var dx = this.x - ballX // distance entre la balle et le mur
             if (abs(dx) <= 10f+ this.width/2) {
@@ -41,17 +38,6 @@ class Wall(override var x: Float = Constants.screenWidth.toFloat(), override var
                 }
                 update
             }
-        }
-
-
-        try {
-            for (observer in observers) {
-                observer.update(updateSpeed)
-            }
-        }catch (e: Exception){
-            // On ignore les exceptions
-            // Cela arrive quand on retire une balle de la liste des observateurs
-            // et qu'on essaie de l'appeler
         }
     }
 }

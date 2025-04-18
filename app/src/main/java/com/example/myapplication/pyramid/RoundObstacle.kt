@@ -15,12 +15,9 @@ class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override
         canvas.drawCircle(x, y , 10f, paint)
     }
 
-    override fun callObservers() {
-        // Appelle les observateurs pour mettre à jour la vitesse de la balle
-        // On crée donc une fonction qui va à partir de la position de la balle et de sa vitesse
-        // déterminer la nouvelle vitesse de la balle après collision
-        var updateSpeed = {
-            ballX: Float, ballY:Float ->
+    override fun createUpdateFunction(): (Float, Float) -> (Float, Float) -> Array<Float> {
+        return {
+                ballX: Float, ballY:Float ->
             var dx = this.x - ballX
             var dy = this.y - ballY
             var distance = sqrt(((dx * dx + dy * dy).toDouble())).toFloat()
@@ -28,10 +25,10 @@ class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override
             if (distance <= 20f) {
                 // il y a collision, on va donc changer la vitesse de la balle
                 var update = {
-                    speedX: Float, speedY: Float ->
+                        speedX: Float, speedY: Float ->
                     // vitesse de la balle
                     var fullSpeed = sqrt((speedX * speedX + speedY * speedY).toDouble()).toFloat()
-                   // perte d'énergie
+                    // perte d'énergie
 //                    fullSpeed = fullSpeed * 0.5f
                     var newSpeedX: Float = -fullSpeed*dx / (distance)
                     var newSpeedY: Float = -fullSpeed*dy / (distance)
@@ -46,15 +43,6 @@ class RoundObstacle(override var x: Float = Constants.screenWidth / 2f, override
                 }
                 update
             }
-        }
-        try {
-            for (observer in observers) {
-                observer.update(updateSpeed)
-            }
-        }catch (e: Exception){
-            // On ignore les exceptions
-            // Cela arrive quand on retire une balle de la liste des observateurs
-            // et qu'on essaie de l'appeler
         }
     }
 }
