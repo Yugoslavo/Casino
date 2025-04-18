@@ -49,14 +49,16 @@ class PyramidView @JvmOverloads constructor (context: Context, attributes: Attri
         everyObjects = EveryObjects.getInstance()
 
         // Création des obstacles
-        for (i in 0 until obstaclePosX.size){
-            var obstacle = RoundObstacle(x = Constants.screenWidth / 2f + obstaclePosX[i], y = Constants.screenHeight / 2f + obstaclePosY[i])
-            everyObjects.obstacleList.add(obstacle)
+        if (everyObjects.obstacleList.isEmpty()){
+            for (i in 0 until obstaclePosX.size){
+                var obstacle = RoundObstacle(x = Constants.screenWidth / 2f + obstaclePosX[i], y = Constants.screenHeight / 2f + obstaclePosY[i])
+                everyObjects.obstacleList.add(obstacle)
+            }
+            var wall1 = Wall(x = 0f, y = Constants.screenHeight / 2f, width = 5f, height = Constants.screenHeight.toFloat())
+            var wall2 = Wall(x = Constants.screenWidth.toFloat() , y = Constants.screenHeight / 2f, width = 5f, height = Constants.screenHeight.toFloat())
+            everyObjects.obstacleList.add(wall1)
+            everyObjects.obstacleList.add(wall2)
         }
-        var wall1 = Wall(x = 0f, y = Constants.screenHeight / 2f, width = 5f, height = Constants.screenHeight.toFloat())
-        var wall2 = Wall(x = Constants.screenWidth.toFloat() , y = Constants.screenHeight / 2f, width = 5f, height = Constants.screenHeight.toFloat())
-        everyObjects.obstacleList.add(wall1)
-        everyObjects.obstacleList.add(wall2)
 
     }
 
