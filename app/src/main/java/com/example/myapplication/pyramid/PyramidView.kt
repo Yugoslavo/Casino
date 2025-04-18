@@ -136,16 +136,16 @@ class PyramidView @JvmOverloads constructor (context: Context, attributes: Attri
         // On lui donne une position aléatoire sur l'axe des abscisses
         // afin d'éviter que toutes les balles soient au même endroit
         var offsetX = (-39..39).random()
-        if (offsetX == 0){
+        if (offsetX == 0) {
             offsetX = 1
         }
-        val startX = Constants.screenWidth / 2f +offsetX
+        val startX = Constants.screenWidth / 2f + offsetX
         var newBall = Ball(bet, x = startX)
         everyObjects.obstacleList.forEach {
             it.attach(newBall)// Ajout de la balle à la liste des observateurs des obstacles
         }
+        newBall.isMoving = true // On met la balle en mouvement
         everyObjects.ballList.add(newBall) // Ajout de la balle à la liste des balles
-        everyObjects.ballList.last().isMoving = true // mise en mouvement de la balle
     }
 
     private fun draw() {

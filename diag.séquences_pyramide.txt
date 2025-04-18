@@ -3,8 +3,11 @@ actor "Utilisateur" as User
 
 participant "MainActivity" as MA
 participant "PyramidActivity" as PA
+participant "PyramidView" as PV
 participant "Player" as Player
 participant "BanqueActivity" as Bank
+participant "Ball" as Ball
+participant "Obstacle" as Obstacle
 
 == Lancement ==
 User -> MA: Lance l'application
@@ -20,7 +23,11 @@ activate Player
 Player --> PA: instance Player
 deactivate Player
 
-PA -> PA: Création des obstacles
+activate PV
+PA -> PV: Affiche la vue de la pyramide
+
+PV -> Obstacle: Création des obstacles
+activate Obstacle
 note right of PA: Les obstacles sont créés et ajoutés \nà la liste interne (EveryObjects.obstacleList)
 
 == Opérations au sein de la Banque ==
@@ -40,7 +47,6 @@ User -> PA: Entre la mise
 PA -> Player: Met à jour la mise
 
 
-activate PA
 Player -->> User: Affiche la mise
 
 alt Mise > montant en banque ou <0
@@ -54,31 +60,30 @@ else Mise = 0
     
 else Mise suffisante et différente de 0
     User -> PA: Clique sur "Play"
-    PA -> PA: Lâche une balle avec mise
-    note right of PA: Création d'une nouvelle balle avec la mise\n- Nouvelle instance Ball(bet, position aléatoire)\n- Attachement de la balle aux obstacles
-    PA -> PA: EveryObjects.ballList.add(newBall)
-    PA -> PA: newBall.isMoving = true
+    PA -> PV: addBall(bet)
+    PV -> Ball: EveryObjects.ballList.add(newBall)
+    activate Ball
+    note right of PV: Création d'une nouvelle balle avec la mise\n- Nouvelle instance Ball(bet, position aléatoire)\n- Attachement de la balle aux obstacles
+    PV -> PV: newBall.isMoving = true
     PA -> Player: soustrait la mise
-    activate Player
-    Player --> Bank: Montant mis à jour
-    deactivate Player
 end
 deactivate PA
 
 == Boucle de jeu et résolution ==
 
-PA -> Ball: move(elapsedTimeMS)
-Ball -> Obstacle: callObservers() [vérification collision]
+PV -> Ball: move(elapsedTimeMS)
+PV -> Obstacle: callObservers() [vérification collision]
 note right of Obstacle: Pour chaque obstacle (RoundObstacle et Wall),\nSi collision, \ncalcul de la nouvelle vitesse (rebond)
 Obstacle -> Ball: update(newSpeed)
 
 alt Balle en bas de l'écran
-    PA -> PA: ballHit(x, ball.bet)
+    PV -> PA: ballHit(x, ball.bet)
     PA -> Player: addMoney(gain)
     activate Player
-   Player --> Bank: Montant mis à jour 
+    Player --> PA: Montant mis à jour
     deactivate Player
-    PA -> PA: Remove ball from ballList
+    PV -> Ball: Remove ball from ballList
+    deactivate Ball
 end
 
 
@@ -87,7 +92,9 @@ User -> PA: Appuie sur "Retour"
 activate PA
 PA -> MA: finish(), retour au menu
 activate MA
+deactivate Obstacle
 deactivate PA
+deactivate PV
 deactivate MA
 
 @enduml

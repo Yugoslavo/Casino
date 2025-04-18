@@ -1,6 +1,6 @@
 package com.example.myapplication.blackjack
 
-enum class Rank ( val displayName: String, val Value : Int){
+enum class Rank ( val displayName: String, val value : Int){
     ACE("ace", 11),
     TWO("two", 2),
     THREE("three", 3),

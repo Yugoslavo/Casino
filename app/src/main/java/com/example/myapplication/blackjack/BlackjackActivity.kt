@@ -66,7 +66,7 @@ class BlackjackActivity : AppCompatActivity() {
     data class Card (val suit: Suit, val rank : Rank)
 
     //Put the card nbr 1 into your hand
-    fun CardReveal(view: View) {
+    private fun cardReveal(view: View) {
         if (deck.isNotEmpty()) {
             val firstCard = deck[0]
             deck.removeAt(0)
@@ -206,7 +206,7 @@ class BlackjackActivity : AppCompatActivity() {
         var total = 0
         var aceCount = 0
         for (card in hand){
-            total += card.rank.Value
+            total += card.rank.value
             if(card.rank.displayName == "ace") aceCount++
         }
         while(total > 21 && aceCount > 0){
