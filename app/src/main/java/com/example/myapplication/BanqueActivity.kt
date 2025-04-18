@@ -27,6 +27,9 @@ class BanqueActivity : AppCompatActivity() {
         findViewById<Button>(R.id.Clicker).setOnClickListener {
             earnMoney(2)
         }
+        findViewById<Button>(R.id.Watcher).setOnClickListener {
+            earnMoney(1)
+        }
     }
 
     fun earnMoney(id: Int){
