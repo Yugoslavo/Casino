@@ -36,14 +36,14 @@ class SlotMachineActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        argent_button = findViewById<Button>(R.id.argent)
         // mise en place du bouton pour ouvrir la banque
-        val openBankButton: Button = findViewById<Button>(R.id.argent)
-        openBankButton.setOnClickListener {
+        argent_button.setOnClickListener {
             openBank()
         }
 
         // affichage de la mise du joueur
-        val mise_view: EditText = findViewById<EditText>(R.id.mise_input)
+        mise_view = findViewById<EditText>(R.id.mise_input)
         mise_view.setText(player.bet.toString())
 
         // Sauvegarde de la mise du joueur lorsque l'utilisateur la modifie
