@@ -1,0 +1,45 @@
+@startuml
+actor "Utilisateur" as User
+participant "MainActivity" as Main
+participant "Initblackjack" as Init
+participant "BlackJackActivity" as Game
+participant "Player" as Player
+participant "BanqueActivity" as Bank
+
+== Lancement ==
+User -> Main : Lance l'application
+
+activate Main
+User -> Main : Clique "BlackJack"
+Main -> Init : startActivity()
+activate Init
+deactivate Main 
+Init -> Bank :startActivity(BlackJackActivity)
+
+Player-->>Bank:Donne le solde actuel
+Bank --> User : Affiche Solde actuel
+== Distribution des cartes ==
+Init -> Game: startActivity(BlackJackActivity)
+activate Game
+deactivate Init
+Game -> Game : deck.add(Card).shuffle & playerHand.add(Card) 
+== Tour du joueur ==
+User -> Game : Piocher
+Game -> Game : playerHand.Add(Card) & calculatePoints(playerHand)
+alt Joueur > 21
+    Game -> Game : playerHasStopped = true &  calculatePoints(playerHand)  &  CheckIfGameShouldEnd
+end
+
+== Tour de l'IA ==
+loop Tant que IA < 17
+    Game -> Game : aiHand.add(Card) & calculatePoints(aiHand)  & CheckIfGameShouldEnd
+end
+
+Game --> User : Affiche résultat
+Game -> Player : changeBet(player.money)
+Player --> Bank : updateMise()
+
+Game -> Main : Retour menu
+Game -> Main : Finish
+deactivate Game
+@enduml
