@@ -41,6 +41,11 @@ package com.example.myapplication {
         + aiPlayTurn(): void
         + calculatePoints(hand: List<Card>): Int
     }
+    
+    class Initblackjack {
+    +onCreate(savedInstanceState: Bundle): void
+    +onClick(view: View): void
+}
 }
 
 package com.example.myapplication.pyramid {
@@ -130,11 +135,14 @@ package com.example.myapplication.slotmachine {
     }
 }
 
+MainActivity --> Initblackjack
+Initblackjack --> black_jack
 Player --> PyramidActivity
 Player --> SlotMachineActivity
 Player --> BanqueActivity
 PyramidActivity --> PyramidView
 PyramidView --> EveryObjects
+black_jack --* Card
 EveryObjects --> Ball
 EveryObjects --> Obstacle
 Obstacle <|-- RoundObstacle
