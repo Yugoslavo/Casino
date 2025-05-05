@@ -10,12 +10,7 @@ package com.example.myapplication {
         + destroyInstance(): void
     }
 
-    class Card {
-        + suit: String
-        + rank: String
-        + value: Int
-        + imageResId: Int
-    }
+
 
     class MainActivity {
         + onCreate(savedInstanceState: Bundle): void
@@ -31,6 +26,18 @@ package com.example.myapplication {
         + exit(view: View): void
     }
 
+
+    
+}
+package com.example.myapplication.blackjack{
+
+    class Initblackjack {
+    - player: Player
+    + onCreate(savedInstanceState: Bundle): void
+    + startBlackJack(view: View): void
+    + openBank(view: View): void
+    + Back(view: View): void
+    }
     class black_jack {
         - deck: List<Card>
         - playerHand: List<Card>
@@ -42,10 +49,14 @@ package com.example.myapplication {
         + calculatePoints(hand: List<Card>): Int
     }
     
-    class Initblackjack {
-    +onCreate(savedInstanceState: Bundle): void
-    +onClick(view: View): void
-}
+        class Card {
+        + suit: String
+        + rank: String
+        + value: Int
+        + imageResId: Int
+    }
+    
+
 }
 
 package com.example.myapplication.pyramid {
@@ -135,6 +146,8 @@ package com.example.myapplication.slotmachine {
     }
 }
 
+
+Initblackjack --> Player
 MainActivity --> Initblackjack
 Initblackjack --> black_jack
 Player --> PyramidActivity
